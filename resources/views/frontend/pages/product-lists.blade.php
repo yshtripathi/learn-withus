@@ -86,7 +86,7 @@
                         <article class="sh-card">
                             <div class="sh-thumb">
                                 <img src="{{ asset($photo[0]) }}" alt="{{ $product->title }}">
-                                <span class="sh-tag">{{ __('frontend.course') }}</span>
+                                
 
                                 @if($product->discount > 0)
                                     <span class="sh-off">-{{ (int) $product->discount }}%</span>
@@ -120,19 +120,7 @@
                                         @endif
                                     </span>
 
-                                    <form action="{{ route('single-add-to-cart') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="quant[1]" value="1">
-                                        <input type="hidden" name="slug" value="{{ $product->slug }}">
-                                        {{-- Without a level the cart would fall back to the course price, which is 0. --}}
-                                        @if($lowest)
-                                            <input type="hidden" name="product_level_id" value="{{ $lowest->id }}">
-                                        @endif
-                                        <button type="submit" class="sh-add" {{ $product->stock <= 0 ? 'disabled' : '' }}>
-                                            <i class="fa-solid fa-cart-shopping"></i>
-                                            {{ $product->stock <= 0 ? __('frontend.sold_out') : __('frontend.add_to_cart') }}
-                                        </button>
-                                    </form>
+                                 
                                 </div>
                             </div>
                         </article>

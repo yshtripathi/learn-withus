@@ -12,7 +12,7 @@
 @endphp
 
 <!-- 1. Hero -->
-<section class="hm-hero" style="background-image: url('{{ asset('assets/images/i1.jpg') }}');">
+<section class="hm-hero" style="background-image: url('{{ asset('assets/images/i1.webp') }}');">
     <div class="container">
         <div class="hm-hero-inner" data-aos="fade-right" data-aos-duration="1000">
             <span class="hm-eyebrow">@lang('frontend.about_company')</span>
@@ -45,14 +45,14 @@
                 <div class="hm-collage" data-aos="fade-right" data-aos-duration="1000">
                     {{-- Portrait shot on its own column so nothing overlaps it. --}}
                     <figure>
-                        <img src="{{ asset('assets/images/i9.jpg') }}"
+                        <img src="{{ asset('assets/images/i9.webp') }}"
                              alt="Students studying together"
                              width="5329" height="7990">
                     </figure>
 
                     <div class="hm-collage-stack">
                         <figure>
-                            <img src="{{ asset('assets/images/i5.jpg') }}"
+                            <img src="{{ asset('assets/images/i5.webp') }}"
                                  alt="Mentor guiding a student through brushwork"
                                  width="7662" height="5110">
                         </figure>
@@ -181,7 +181,7 @@
             <div class="col-lg-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
                 <article class="st-card">
                     <div class="st-media">
-                        <img src="{{ asset('assets/images/i6.jpg') }}"
+                        <img src="{{ asset('assets/images/i6.webp') }}"
                              alt="@lang('frontend.studio_card_1_title')"
                              width="4256" height="2832" loading="lazy">
                     </div>
@@ -195,7 +195,7 @@
             <div class="col-lg-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
                 <article class="st-card">
                     <div class="st-media">
-                        <img src="{{ asset('assets/images/i10.jpg') }}"
+                        <img src="{{ asset('assets/images/i10.webp') }}"
                              alt="@lang('frontend.studio_card_2_title')"
                              width="1920" height="1280" loading="lazy">
                     </div>

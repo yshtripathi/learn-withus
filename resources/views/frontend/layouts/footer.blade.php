@@ -53,7 +53,7 @@
 .ap-footer-logo img {
     height: 48px !important;
     width: auto !important;
-    filter: brightness(0) invert(1) !important;
+  
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
 }
 

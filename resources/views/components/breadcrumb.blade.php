@@ -7,7 +7,7 @@
 ])
 
 @php
-    $background = $image ?: asset('assets/images/i12.jpg');
+    $background = $image ?: asset('assets/images/i12.webp');
 @endphp
 
 <section {{ $attributes->merge(['class' => 'section-breadcrumb']) }}

@@ -196,7 +196,7 @@
         <div class="row align-items-center gy-5">
             <div class="col-lg-6">
                 <figure class="au-figure" data-aos="fade-right" data-aos-duration="1000">
-                    <img src="{{ asset('assets/images/i3.jpg') }}" alt="Manga-style character illustration" class="au-img">
+                    <img src="{{ asset('assets/images/i3.webp') }}" alt="Manga-style character illustration" class="au-img">
                 </figure>
             </div>
 

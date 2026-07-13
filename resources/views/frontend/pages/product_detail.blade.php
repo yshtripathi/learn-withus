@@ -174,7 +174,7 @@
                             <article class="sh-card">
                                 <div class="sh-thumb">
                                     <img src="{{ asset($relPhoto[0]) }}" alt="{{ $rel->title }}">
-                                    <span class="sh-tag">{{ __('frontend.course') }}</span>
+                                   
                                     <div class="sh-overlay">
                                         <a href="{{ route('product-detail', $rel->slug) }}" class="sh-view">
                                             <i class="fa-regular fa-eye"></i> {{ __('frontend.view_details') }}
