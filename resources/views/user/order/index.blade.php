@@ -10,13 +10,13 @@
               <div class="row">
                   <div class="col-xl-12">
                       <div class="hero-course-1-text">
-                          <h2>{{ __('common.order_detail') }}</h2>
+                          <h2>{{ __('frontend.order_detail') }}</h2>
                       </div>
                       <div class="course-title-breadcrumb">
                           <nav>
                               <ol class="breadcrumb">
-                                  <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('common.home') }}</a></li>
-                                  <li class="breadcrumb-item active" aria-current="page">{{ __('common.order_detail') }}</li>
+                                  <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('frontend.home') }}</a></li>
+                                  <li class="breadcrumb-item active" aria-current="page">{{ __('frontend.order_detail') }}</li>
                               </ol>
                           </nav>
                       </div>
@@ -37,7 +37,7 @@
          </div>
      </div>
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary float-left"> {{ __('common.order_lists') }}</h6>
+      <h6 class="m-0 font-weight-bold text-primary float-left"> {{ __('frontend.order_lists') }}</h6>
     </div>
     <div class="card-body">
       <div class="table-responsive">

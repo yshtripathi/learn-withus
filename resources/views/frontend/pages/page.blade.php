@@ -8,7 +8,7 @@
 <x-breadcrumb
     :title="$page_data->page_title"
     :items="[
-        ['label' => __('common.home'), 'url' => route('home')],
+        ['label' => __('frontend.home'), 'url' => route('home')],
         ['label' => $page_data->page_title],
     ]" />
 <!-- End Breadcrumb Area  -->

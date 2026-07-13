@@ -136,12 +136,12 @@ return [
     
     // Authentication Pages
     'forget_password' => 'パスワードをお忘れですか？',
-    'forgot_password_title' => 'パスワードをお忘れですか？ | LearnWithUs',
+    'forgot_password_title' => 'パスワードをお忘れですか？',
     'check_your_email' => 'アカウントを検索するためにメールアドレスを入力してください。',
     'dont_have_account' => 'アカウントをお持ちではありませんか？',
     'sign_up' => 'サインアップ',
     
-    'sign_in_title' => 'サインイン | LearnWithUs',
+    'sign_in_title' => 'サインイン',
     'sign_in' => 'サインイン',
     'sign_into_account' => 'アカウントにサインイン',
     'password_label' => 'パスワード',
@@ -151,7 +151,7 @@ return [
     'error_password_min' => 'パスワードは5文字以上である必要があります。',
     
     'create_an_account' => 'アカウントを作成',
-    'create_account_title' => 'アカウントを作成 | LearnWithUs',
+    'create_account_title' => 'アカウントを作成',
     'name_label' => '名前',
     'terms_agree_register' => '以下に同意します：',
     'terms_policy' => '利用規約',
@@ -161,7 +161,7 @@ return [
     'error_terms_required_register' => '利用規約に同意する必要があります。',
     
     // Order Status Pages
-    'order_status_title' => '注文ステータス | LearnWithUs',
+    'order_status_title' => '注文ステータス',
     'order_status' => '注文ステータス',
     
     // Order Failed
@@ -327,4 +327,13 @@ return [
     'studio_card_1_text' => '私たちのスタジオには最新の技術が備わっています。',
     'studio_card_2_title' => '専門のインストラクター',
     'studio_card_2_text' => '長年の経験を持つプロから学びます。',
+    
+    // Error Pages
+    'oops' => 'おっと！',
+    'this_link_does_not' => 'このリンクは存在しないか、利用できません。',
+    'please_go' => 'ホームページに戻ってください。',
+    'go_to_homepage' => 'ホームページへ',
+
+    // Order Lists
+    'order_lists' => '注文リスト',
 ];

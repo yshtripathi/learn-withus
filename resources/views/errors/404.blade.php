@@ -75,11 +75,11 @@ max-width:100%;
      <div id="notfound">
         <div class="notfound">
             <div class="notfound-404">
-                <h1> {{ __('common.oops') }} </h1>
+                <h1> {{ __('frontend.oops') }} </h1>
             </div>
-          <p class="nfound_cntnt">{{ __('common.this_link_does_not') }}<br>
-            {{ __('common.please_go') }}</p>
-            <a href="{{ route('home') }}" class="theme-btn btn-style-one">{{ __('common.go_to_homepage') }}</a>
+          <p class="nfound_cntnt">{{ __('frontend.this_link_does_not') }}<br>
+            {{ __('frontend.please_go') }}</p>
+            <a href="{{ route('home') }}" class="theme-btn btn-style-one">{{ __('frontend.go_to_homepage') }}</a>
         </div>
     </div>
 </section>

@@ -161,7 +161,7 @@ return [
     'error_terms_required_register' => 'You must agree to our Terms & Conditions.',
     
     // Order Status Pages
-    'order_status_title' => 'Order Status | LearnWithUs',
+    'order_status_title' => 'Order Status',
     'order_status' => 'Order Status',
     
     // Order Failed
@@ -327,4 +327,13 @@ return [
     'studio_card_1_text' => 'Our studios are equipped with the latest technology.',
     'studio_card_2_title' => 'Expert instructors',
     'studio_card_2_text' => 'Learn from professionals with years of experience.',
+    
+    // Error Pages
+    'oops' => 'Oops!',
+    'this_link_does_not' => 'This link doesn\'t exist or is unavailable.',
+    'please_go' => 'Please go back to the homepage.',
+    'go_to_homepage' => 'Go to Homepage',
+
+    // Order Lists
+    'order_lists' => 'Order Lists',
 ];
