@@ -4,164 +4,91 @@
 
 @section('main-content')
 
-<main>
-    <x-breadcrumb
-        :title="__('common.forget_password')"
-        :items="[
-            ['label' => __('common.home'), 'url' => route('home')],
-            ['label' => __('common.forget_password')],
-        ]" />
-    <div class="modal-dialog forget-p-modal">
-        <div class="modal-content">
-            <!-- Signin -->
-            <div class="collapse show" id="collapseSignin" data-bs-parent="#accountModal">
-                <div class="modal-header">
-                    <h5 class="modal-title">{{ __('common.forget_password') }}</h5>
-                    <h5>@if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                        else
-                        <div class="alert alert-success">
-                            {{ __('common.check_your_email') }}
-                        </div>
-                        @endif
-                    </h5>
+<x-breadcrumb
+    :title="__('common.forget_password')"
+    :items="[
+        ['label' => __('common.home'), 'url' => route('home')],
+        ['label' => __('common.forget_password')],
+    ]" />
+
+<section class="ct-section">
+    <div class="container">
+        <div class="ct-card ct-auth" data-aos="fade-up" data-aos-duration="1000">
+
+            @if(session('success') || session('status'))
+                <div class="ct-alert ct-alert-success">{{ session('success') ?? session('status') }}</div>
+            @endif
+
+            <h2>{{ __('common.forget_password') }}</h2>
+            <p>{{ __('common.check_your_email') }}</p>
+
+            <form name="frmForgetPwd" id="frmForgetPwd" action="{{ route('password.email') }}" method="post" novalidate>
+                @csrf
+
+                <div class="ct-field @error('email') is-invalid @enderror">
+                    <label class="ct-label" for="email">{{ __('common.email') }} <span>*</span></label>
+                    <div class="ct-control has-icon">
+                        <input type="email" name="email" id="email" class="ct-input"
+                               value="{{ old('email') }}" placeholder="{{ __('common.enter_email') }}">
+                        <i class="ct-icon fa-regular fa-envelope"></i>
+                    </div>
+                    @error('email')<span class="ct-error">{{ $message }}</span>@enderror
                 </div>
 
-                <div class="modal-body auth-frm">
-
-                    <!-- Form Signin -->
-                    <form name="frmLogin2" id="frmLogin2" action="{{route('password.email')}}" method="post"
-                        class="comment-one__form">
-                        @csrf
-                        <!-- <form class="mb-5" onsubmit="redirectToAccount(event)"> -->
-
-                        <!-- Email -->
-                        <div class="form-group mb-5">
-                            <label for="modalSigninEmail">
-                                {{ __('common.email') }}
-                            </label>
-                            <!-- <input type="email" class="form-control" id="modalSigninEmail" placeholder="creativelayers"> -->
-                            <input type="email" name="email" id="email" class="form-control" value="{{old('email')}}"
-                                required>
-                            @error('email')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                <div class="ct-field @error('captcha') is-invalid @enderror">
+                    <div class="ct-captcha">
+                        <div class="ct-control">
+                            <input type="text" name="captcha" id="captcha" class="ct-input"
+                                   autocomplete="off" placeholder="{{ __('common.fill_captcha') }}">
                         </div>
-                        <div class="form-group w-100 row mt-4 mb-3">
-                        <div class="col-md-8">         
-                        <input type="text" id="captcha" name="captcha" autocomplete="off" class="form-control" placeholder="{{ __('common.fill_captcha') }}" required>
-                            @error('captcha')
-                        <span class="text-danger" id="captcha-error">{{ __('common.captcha_error') }}</span>
-                            @enderror 
-                        </div> 
-                        <div class="col-md-4">                                   
-                        @captcha 
-                        </div> 
+                        <div class="ct-captcha-img">
+                            @captcha
                         </div>
-
-
-                        <button type="submit" name="submit"
-                            class="ed-primary-btn justify-content-center mb-5 w-100 ">{{ __('common.forget_password') }}</button>
-                    </form>
-
-                    <!-- Text -->
-                    <p class="mb-0 font-size-sm text-center">
-                        {{ __('common.dont_have_account') }} <a class="text-underline"
-                            href="{{ route('register.form') }}">{{ __('common.sign_up') }}</a>
-                    </p>
+                    </div>
+                    @error('captcha')<span class="ct-error">{{ __('common.captcha_error') }}</span>@enderror
                 </div>
-            </div>
 
+                <button type="submit" class="ct-submit ct-submit-full">
+                    <span>{{ __('common.forget_password') }}</span>
+                    <i class="fa-regular fa-paper-plane"></i>
+                </button>
+            </form>
+
+            <p class="ct-alt">
+                {{ __('common.dont_have_account') }}
+                <a href="{{ route('register.form') }}">{{ __('common.sign_up') }}</a>
+            </p>
         </div>
     </div>
-</main>
+</section>
 
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
 <script>
-    $(document).ready(function() {
-        $("#frmLogin").validate({
+    $(document).ready(function () {
+        $("#frmForgetPwd").validate({
+            errorClass: 'ct-error',
+            errorElement: 'span',
             rules: {
-                password: {
-                    required: true,
-                    minlength: 5
-                },
-                email: {
-                    required: true,
-                    email: true
-                }
+                email: { required: true, email: true },
+                captcha: "required"
             },
             messages: {
-                password: {
-                    required: "{{ __('common.password_required') }}",
-                    minlength: "{{ __('common.password_confirmation_min') }}"
-                },
-                email: "{{ __('common.email_required') }}"
+                email: "{{ __('common.email_required') }}",
+                captcha: "{{ __('common.fill_it') }}"
+            },
+            errorPlacement: function (error, element) {
+                error.appendTo(element.closest('.ct-field'));
+            },
+            highlight: function (element) {
+                $(element).closest('.ct-field').addClass('is-invalid');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.ct-field').removeClass('is-invalid');
             }
         });
     });
 </script>
-<script>
-    $(document).ready(function() {
-        $("#frmRegister").validate({
-            rules: {
-                password: {
-                    required: true,
-                    minlength: 5
-                },
-                email: {
-                    required: true,
-                    email: true
-                },
-                terms: "required",
-                captcha:"required"
-            },
-            messages: {
-                password: {
-                    required: "{{ __('common.password_required') }}",
-                    minlength: "{{ __('common.password_min') }}"
-                },
-                email: "{{ __('common.email_required') }}",
-                terms: "{{ __('common.terms_required') }}", // Add this for terms error message
-                captcha:"{{__('common.fill_it')}}",
-            },
-        });
-    });
-</script>
-@endpush
-@push('styles')
-<style>
-    .shop.login .form .btn {
-        margin-right: 0;
-    }
-
-    .btn-facebook {
-        background: #39579A;
-    }
-
-    .btn-facebook:hover {
-        background: #073088 !important;
-    }
-
-    .btn-github {
-        background: #444444;
-        color: white;
-    }
-
-    .btn-github:hover {
-        background: black !important;
-    }
-
-    .btn-google {
-        background: #ea4335;
-        color: white;
-    }
-
-    .btn-google:hover {
-        background: rgb(243, 26, 26) !important;
-    }
-</style>
 @endpush

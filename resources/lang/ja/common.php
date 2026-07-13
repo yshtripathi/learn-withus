@@ -482,6 +482,7 @@ return [
     'check_payment_details'=>'お支払いの詳細を確認する',
     'contact_bank'=>'銀行またはカードプロバイダーにお問い合わせください',
     'try_different_payment'=>'別の支払い方法を試す',
+    'try_again'=>'もう一度試す',
     'need_assistance'=>'支援が必要ですか？',
     'reach_out'=>'問題が解決しない場合は、私たちに連絡することを躊躇しないでください',
     'we_are_here'=>'私たちは助けるためにここにいます！',
