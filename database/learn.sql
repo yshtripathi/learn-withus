@@ -215,7 +215,7 @@ CREATE TABLE `instructors` (
   `instructor_desc` text,
   `instructor_desc_ja` text,
   `status` varchar(10) NOT NULL DEFAULT 'A'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `instructors`
@@ -600,7 +600,7 @@ CREATE TABLE `pages` (
   `page_desc_ja` longtext,
   `page_meta` text,
   `page_keywords` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pages`

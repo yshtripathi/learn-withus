@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductLevel;
 use App\Models\Wishlist;
 use App\Models\Cart;
 use Illuminate\Support\Str;
@@ -69,6 +70,7 @@ class CartController extends Controller
         $request->validate([
             'slug'      =>  'required',
             'quant'      =>  'required',
+            'product_level_id' => 'nullable|exists:product_levels,id',
         ]);
         // dd($request->quant[1]);
 
@@ -76,6 +78,8 @@ class CartController extends Controller
         //$product = Product::where('slug', $request->slug)->first();
         $product = Product::getProductBySlug($request->slug);
 
+        // A course can be sold per skill level; when one is picked its price wins over the course price.
+        $priced = $this->resolvePricedItem($product, $request->product_level_id);
 
 
         if($product->stock <$request->quant[1]){
@@ -106,24 +110,24 @@ $already_cart='';
 
         if($already_cart) {
             $already_cart->quantity = $already_cart->quantity + $request->quant[1];
-            // $already_cart->price = ($product->price * $request->quant[1]) + $already_cart->price ;
-            $already_cart->amount = ($product->price * $request->quant[1])+ $already_cart->amount;
-            $already_cart->amount_jp = ($product->price_jp * $request->quant[1])+ $already_cart->amount_jp;
-            $already_cart->amount_hk = ($product->price_hk * $request->quant[1])+ $already_cart->amount_hk;
+            // $already_cart->price = ($priced->price * $request->quant[1]) + $already_cart->price ;
+            $already_cart->amount = ($priced->price * $request->quant[1])+ $already_cart->amount;
+            $already_cart->amount_jp = ($priced->price_jp * $request->quant[1])+ $already_cart->amount_jp;
+            $already_cart->amount_hk = ($priced->price_hk * $request->quant[1])+ $already_cart->amount_hk;
 
             if ($already_cart->product->stock < $already_cart->quantity || $already_cart->product->stock <= 0) return back()->with('error',__('common.stock_not_sufficient'));
 
             $already_cart->save();
-            
+
         }else{
-            
+
             $cart = new Cart;
             $cart->user_id = auth()->user()->id ?? $guest;
             $cart->product_id = $product->id;
             $cart->currency = session("currency", "USD");
-            $cart->price = $product->price;
-            $cart->price_jp = $product->price_jp;
-            $cart->price_hk = $product->price_hk;
+            $cart->price = $priced->price;
+            $cart->price_jp = $priced->price_jp;
+            $cart->price_hk = $priced->price_hk;
             $cart->quantity = $request->quant[1];
             $cart->amount = $cart->price * $cart->quantity;
             $cart->amount_jp = $cart->price_jp * $cart->quantity;
@@ -136,6 +140,20 @@ $already_cart='';
         return back();       
     } 
     
+    // Returns whatever carries the price for this line: the chosen skill level when it
+    // belongs to the course, otherwise the course itself.
+    private function resolvePricedItem($product, $product_level_id){
+        if (empty($product_level_id)) {
+            return $product;
+        }
+
+        $level = ProductLevel::where('id', $product_level_id)
+            ->where('course_id', $product->id)
+            ->first();
+
+        return $level ?: $product;
+    }
+
     public function cartDelete(Request $request){
         $cart = Cart::find($request->id);
         if ($cart) {
@@ -172,15 +190,13 @@ $already_cart='';
                     // return $cart;
                     
                     //if ($cart->product->stock <=0) continue;
-                    $after_price=($cart->product->price-($cart->product->price*$cart->product->discount)/100);
-                    $cart->amount = $after_price * $quant;
-                    // return $cart->price;
 
-
-
-                    $updatAmount = ($cart->product->price) * $quant;
-                    $updatAmount_JP = ($cart->product->price_jp) * $quant;
-                    Cart::where('id', $id)->update(['quantity' => $quant, 'amount' => $updatAmount, 'amount_jp' => $updatAmount_JP]);
+                    // Price the line off the unit price stored on the cart row, not the course, so a
+                    // skill-level price survives a quantity change.
+                    $updatAmount = ($cart->price) * $quant;
+                    $updatAmount_JP = ($cart->price_jp) * $quant;
+                    $updatAmount_HK = ($cart->price_hk) * $quant;
+                    Cart::where('id', $id)->update(['quantity' => $quant, 'amount' => $updatAmount, 'amount_jp' => $updatAmount_JP, 'amount_hk' => $updatAmount_HK]);
 
                     
 

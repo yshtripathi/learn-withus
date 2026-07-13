@@ -159,6 +159,8 @@ Route::get('user/forgetpassword', [FrontendController::class, 'logout'])->name('
         Route::resource('/category', 'CategoryController');
         // Product
         Route::resource('/product', 'ProductController');
+        // Product Level
+        Route::resource('/product-level', 'ProductLevelController');
         // Ajax for sub category
         Route::post('/category/{id}/child', 'CategoryController@getChildByParent');
         // POST category

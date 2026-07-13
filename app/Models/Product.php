@@ -21,6 +21,9 @@ class Product extends Model
     public function rel_prods(){
         return $this->hasMany('App\Models\Product','cat_id','cat_id')->where('status','active')->orderBy('id','DESC')->limit(8);
     }
+    public function levels(){
+        return $this->hasMany('App\Models\ProductLevel','course_id','id')->ordered();
+    }
     public function getReview(){
         return $this->hasMany('App\Models\ProductReview','product_id','id')->with('user_info')->where('status','active')->orderBy('id','DESC');
     }
@@ -44,7 +47,7 @@ class Product extends Model
 
         if($currentLocale == "ja") {
             if($currency == "USD") {
-                return Product::with(['cat_info','rel_prods','getReview'])->select(
+                return Product::with(['cat_info','rel_prods','getReview','levels'])->select(
                     'id',
                     'title_jp as title',
                     'summary_jp as summary',
@@ -74,7 +77,7 @@ class Product extends Model
                     )->where('slug',$slug)->first();
             }
             else if($currency == "HKD") {
-                return Product::with(['cat_info','rel_prods','getReview'])->select(
+                return Product::with(['cat_info','rel_prods','getReview','levels'])->select(
                     'id',
                     'title_jp as title',
                     'summary_jp as summary',
@@ -104,7 +107,7 @@ class Product extends Model
                     )->where('slug',$slug)->first();
             }
             else {
-                return Product::with(['cat_info','rel_prods','getReview'])->select(
+                return Product::with(['cat_info','rel_prods','getReview','levels'])->select(
                     'id',
                     'title_jp as title',
                     'summary_jp as summary',
@@ -135,10 +138,10 @@ class Product extends Model
             }
         }
         else {
-            //return Product::with(['cat_info','rel_prods','getReview'])->where('slug',$slug)->first();
+            //return Product::with(['cat_info','rel_prods','getReview','levels'])->where('slug',$slug)->first();
 
             if($currency == "USD") {
-                return Product::with(['cat_info','rel_prods','getReview'])->select(
+                return Product::with(['cat_info','rel_prods','getReview','levels'])->select(
                     'id',
                     'title',
                     'summary',
@@ -168,7 +171,7 @@ class Product extends Model
                     )->where('slug',$slug)->first();
             }
             else if($currency == "USD") {
-                return Product::with(['cat_info','rel_prods','getReview'])->select(
+                return Product::with(['cat_info','rel_prods','getReview','levels'])->select(
                     'id',
                     'title',
                     'summary',
@@ -198,7 +201,7 @@ class Product extends Model
                     )->where('slug',$slug)->first();
             }
             else {
-                return Product::with(['cat_info','rel_prods','getReview'])->select(
+                return Product::with(['cat_info','rel_prods','getReview','levels'])->select(
                     'id',
                     'title',
                     'summary',
