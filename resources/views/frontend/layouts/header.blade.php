@@ -168,9 +168,17 @@
         border-color: var(--ed-color-theme-secondary);
     }
     .hd-pill img { width: 20px; height: auto; border-radius: 3px; }
-    .hd-pill i.caret { font-size: 0.62rem; }
+    .hd-pill i.caret { font-size: 0.62rem; transition: transform 0.28s ease; }
 
     .hd-pill-wrap { position: relative; }
+
+    /* Mirror the nav: tint the pill and flip the caret while its menu is open. */
+    .hd-pill-wrap:hover .hd-pill {
+        color: var(--ed-color-theme-secondary);
+        border-color: var(--ed-color-theme-secondary);
+        background: color-mix(in srgb, var(--ed-color-theme-secondary) 10%, #fff);
+    }
+    .hd-pill-wrap:hover .hd-pill i.caret { transform: rotate(180deg); }
 
     /* Cart button */
     .hd-cart {
