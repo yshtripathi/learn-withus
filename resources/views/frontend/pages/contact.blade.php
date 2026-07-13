@@ -161,46 +161,4 @@
 
 @endsection
 
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#contactForm").validate({
-            errorClass: 'ct-error',
-            errorElement: 'span',
-            rules: {
-                name: "required",
-                subject: "required",
-                email: { required: true, email: true },
-                phone: { required: true, minlength: 10 },
-                message: "required",
-                terms: "required",
-                captcha: "required"
-            },
-            messages: {
-                name: "{{ __('frontend.error_name_required') }}",
-                subject: "{{ __('frontend.error_subject_required') }}",
-                email: "{{ __('frontend.error_email_required') }}",
-                phone: {
-                    required: "{{ __('frontend.error_phone_required') }}",
-                    minlength: "{{ __('frontend.error_phone_min') }}"
-                },
-                message: "{{ __('frontend.error_message_required') }}",
-                terms: "{{ __('frontend.error_terms_required') }}",
-                captcha: "{{ __('frontend.error_captcha_required') }}"
-            },
-            // Append to .ct-field (a block) so the message always lands under the
-            // control rather than beside it inside the flex row.
-            errorPlacement: function (error, element) {
-                error.appendTo(element.closest('.ct-field'));
-            },
-            highlight: function (element) {
-                $(element).closest('.ct-field').addClass('is-invalid');
-            },
-            unhighlight: function (element) {
-                $(element).closest('.ct-field').removeClass('is-invalid');
-            }
-        });
-    });
-</script>
-@endpush
+

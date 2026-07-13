@@ -98,7 +98,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+<script src="{{ asset('frontend/js/jquery.validate.min.js') }}"></script>
 <script>
     $(document).ready(function () {
         $("#frmRegister").validate({

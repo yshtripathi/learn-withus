@@ -23,7 +23,11 @@ class ContactController extends Controller
 
         $admin = env('MAIL_FROM_ADDRESS');
         //Mail::to($data["email"])->send(new ContactMail($data));
-         Mail::to($admin)->send(new ContactMail($data));
+        /*  Mail::to($admin)->send(new ContactMail($data)); */
+
+        if ($request->ajax()) {
+            return response()->json(['success' => __('frontend.message_sent_success')]);
+        }
 
         return redirect('contact')->with('success', __('frontend.message_sent_success'));
     }
