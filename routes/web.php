@@ -54,7 +54,6 @@
     Route::get('user/register', [FrontendController::class, 'register'])->name('register.form');
     Route::post('user/register', [FrontendController::class, 'registerSubmit'])->name('register.submit');
     Route::post('/check-email', [RegisterController::class, 'checkEmail'])->name('check.email');
-Route::get('user/forgetpassword', [FrontendController::class, 'logout'])->name('user.logout');
     Route::get('user/forgetpassword', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('forgetpwd.form');
    
     // Reset password

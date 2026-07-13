@@ -37,7 +37,9 @@ class FrontendController extends Controller
         $banners=Banner::where('status','active')->limit(3)->orderBy('id','DESC')->get();
         // return $banner;
         $products=Product::where('status','active')->orderBy('id','DESC')->limit(8)->get();
-        $category=Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
+        // Each category renders as a Netflix-style row of its own courses, and each
+        // course card shows its cheapest skill level, so pull both in one go.
+        $category=Category::with('products.levels')->where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
         $instructors=Instructor::getAllInstructor()->take(8);
         // return $category;
         return view('frontend.index')

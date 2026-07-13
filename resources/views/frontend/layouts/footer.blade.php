@@ -422,9 +422,8 @@
                     <h3 class="ap-footer-title">{{ __('common.quick_links') }}</h3>
                     <ul class="ap-link-list">
                         <li><a href="{{route('home')}}">{{ __('common.home') }}</a></li>
-                        <li><a href="{{ route('pages', 'about-us') }}">{{ __('common.about') }}</a></li>                                  
+                        <li><a href="{{ route('about-us') }}">{{ __('common.about') }}</a></li>
                         <li><a href="{{ url('/product-lists') }}">{{ __('common.courses') }}</a></li>
-                        <li><a href="{{ route('instructor') }}">{{ __('common.our_instructors') }}</a></li>
                         <li><a href="{{ route('contact') }}">{{ __('common.contact') }}</a></li>
                     </ul>
                 </div>
