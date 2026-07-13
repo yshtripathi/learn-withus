@@ -1,20 +1,33 @@
     @yield('meta')
     <meta charset="utf-8">
-    <meta name="robots" content="index, follow" />
-    <title>@yield('title','Learn Withus | Online Courses in Health, Wellness & Lifestyle')</title>
-   <meta name="description" content="@yield('meta_description', 'Learn Withus offers expert-led online courses in health, wellness, fitness, nutrition, and lifestyle improvement. Learn at your own pace and transform your life.')">
-   <meta name="keywords" content="@yield('meta_keywords', 'health courses, wellness courses, lifestyle learning, online health training, fitness courses, nutrition courses, stress management, self-care education')">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Primary Meta Tags -->
+    <title>@yield('title', __('frontend.default_page_title'))</title>
+    <meta name="description" content="@yield('meta_description', __('frontend.default_page_description'))">
+    <meta name="keywords" content="@yield('meta_keywords', __('frontend.default_page_keywords'))">
+
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="@yield('title','Learn Withus | Online Health, Wellness & Lifestyle Courses')">
-    <meta property="og:description" content="@yield('meta_description', 'Discover health, wellness, and lifestyle courses designed to help you live better. Learn fitness, nutrition, stress relief, and personal wellness online with Learn Withus.')">
-    <meta property="og:image" content="{{ asset('assets/img/images/about-img-1.jpg') }}">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:site_name" content="Learn Withus">
-    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="@yield('og_title', __('frontend.default_og_title'))">
+    <meta property="og:description" content="@yield('og_description', __('frontend.default_og_description'))">
+    <meta property="og:image" content="@yield('og_image', asset('assets/img/images/about-img-1.jpg'))">
+    <meta property="og:site_name" content="{{ __('frontend.platform_name') }}">
+    <meta property="og:locale" content="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="@yield('twitter_title', __('frontend.default_twitter_title'))">
+    <meta name="twitter:description" content="@yield('twitter_description', __('frontend.default_twitter_description'))">
+    <meta name="twitter:image" content="@yield('twitter_image', asset('assets/img/images/about-img-1.jpg'))">
+
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/favicon.ico') }}">
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/venobox.min.css') }}">
@@ -25,13 +38,5 @@
     <link rel="stylesheet" href="{{ asset('assets/css/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/swiper.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    
     @cookieconsentscripts
-   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6MCBG8R507"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-6MCBG8R507');
-</script>

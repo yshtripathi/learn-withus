@@ -504,7 +504,7 @@
 <div id="hd-preloader" class="hd-preloader">
     <div class="hd-preloader-inner">
         <div class="hd-spinner"></div>
-        <div class="hd-preloader-text"><b>Learn</b> Withus</div>
+        <div class="hd-preloader-text"><b>Learn</b>WithUs</div>
     </div>
 </div>
 
@@ -514,22 +514,22 @@
         <div class="hd-inner">
 
             <a href="{{ route('home') }}" class="hd-logo">
-                <img src="{{ asset('assets/img/logo/logo-1.png') }}" alt="Learn Withus">
+                <img src="{{ asset('assets/img/logo/logo-1.png') }}" alt="LearnWithUs">
             </a>
 
             <ul class="hd-nav">
                 <li class="{{ request()->routeIs('home') ? 'is-active' : '' }}">
-                    <a href="{{ route('home') }}">{{ __('common.home') }}</a>
+                    <a href="{{ route('home') }}">{{ __('frontend.home') }}</a>
                 </li>
 
                 <li class="{{ request()->routeIs('product-lists') || request()->is('product-cat/*') ? 'is-active' : '' }}">
                     <a href="{{ route('product-lists') }}">
-                        {{ __('common.courses') }} <i class="fa-solid fa-chevron-down"></i>
+                        {{ __('frontend.courses') }} <i class="fa-solid fa-chevron-down"></i>
                     </a>
                     <ul class="hd-drop">
                         <li>
                             <a href="{{ route('product-lists') }}">
-                                <i class="fa-solid fa-grip"></i> {{ __('common.browse_all_courses') }}
+                                <i class="fa-solid fa-grip"></i> {{ __('frontend.browse_all_courses') }}
                             </a>
                         </li>
                         <li><hr></li>
@@ -544,25 +544,25 @@
                 </li>
 
                 <li class="{{ request()->routeIs('about-us') ? 'is-active' : '' }}">
-                    <a href="{{ route('about-us') }}">{{ __('common.about') }}</a>
+                    <a href="{{ route('about-us') }}">{{ __('frontend.about') }}</a>
                 </li>
 
                 <li class="{{ request()->routeIs('contact') ? 'is-active' : '' }}">
-                    <a href="{{ route('contact') }}">{{ __('common.contact') }}</a>
+                    <a href="{{ route('contact') }}">{{ __('frontend.contact') }}</a>
                 </li>
 
                 <li>
                     <a href="javascript:void(0)">
-                        {{ __('common.account') }} <i class="fa-solid fa-chevron-down"></i>
+                        {{ __('frontend.account') }} <i class="fa-solid fa-chevron-down"></i>
                     </a>
                     <ul class="hd-drop hd-drop-right">
                         @auth
-                            <li><a href="{{ route('user') }}"><i class="fa-regular fa-user"></i> {{ __('common.my_account') }}</a></li>
+                            <li><a href="{{ route('user') }}"><i class="fa-regular fa-user"></i> {{ __('frontend.my_account') }}</a></li>
                             <li><hr></li>
-                            <li><a href="{{ route('user.logout') }}"><i class="fa-solid fa-arrow-right-from-bracket"></i> {{ __('common.logout') }}</a></li>
+                            <li><a href="{{ route('user.logout') }}"><i class="fa-solid fa-arrow-right-from-bracket"></i> {{ __('frontend.logout') }}</a></li>
                         @else
-                            <li><a href="{{ route('login.form') }}"><i class="fa-solid fa-arrow-right-to-bracket"></i> {{ __('common.login') }}</a></li>
-                            <li><a href="{{ route('register.form') }}"><i class="fa-solid fa-user-plus"></i> {{ __('common.register') }}</a></li>
+                            <li><a href="{{ route('login.form') }}"><i class="fa-solid fa-arrow-right-to-bracket"></i> {{ __('frontend.login') }}</a></li>
+                            <li><a href="{{ route('register.form') }}"><i class="fa-solid fa-user-plus"></i> {{ __('frontend.register') }}</a></li>
                         @endauth
                     </ul>
                 </li>
@@ -572,7 +572,7 @@
 
                 <!-- Currency -->
                 <div class="hd-pill-wrap">
-                    <button type="button" class="hd-pill" data-hd-toggle="currency">
+                    <button type="button" class="hd-pill" data-hd-toggle="currency" aria-label="{{ __('frontend.select_currency') }}">
                         <span class="label">{{ $currencyLabel }}</span>
                         <i class="fa-solid fa-chevron-down caret"></i>
                     </button>
@@ -585,32 +585,32 @@
 
                 <!-- Language -->
                 <div class="hd-pill-wrap">
-                    <button type="button" class="hd-pill" data-hd-toggle="lang">
+                    <button type="button" class="hd-pill" data-hd-toggle="lang" aria-label="{{ __('frontend.select_language') }}">
                         <img src="{{ asset($isJa ? 'assets/img/japan.png' : 'assets/img/united-kingdom.png') }}" alt="">
-                        <span class="label">{{ $isJa ? 'Japanese' : 'English' }}</span>
+                        <span class="label">{{ $isJa ? __('frontend.language_japanese') : __('frontend.language_english') }}</span>
                         <i class="fa-solid fa-chevron-down caret"></i>
                     </button>
                     <ul class="hd-drop hd-drop-right" data-hd-menu="lang">
                         <li>
                             <a href="{{ route('change.language', 'en') }}">
-                                <img src="{{ asset('assets/img/united-kingdom.png') }}" alt=""> English
+                                <img src="{{ asset('assets/img/united-kingdom.png') }}" alt=""> {{ __('frontend.language_english') }}
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('change.language', 'ja') }}">
-                                <img src="{{ asset('assets/img/japan.png') }}" alt=""> Japanese
+                                <img src="{{ asset('assets/img/japan.png') }}" alt=""> {{ __('frontend.language_japanese') }}
                             </a>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Cart -->
-                <button type="button" class="hd-cart" id="hd-cart-open" aria-label="{{ __('common.cart') }}">
+                <button type="button" class="hd-cart" id="hd-cart-open" aria-label="{{ __('frontend.open_cart') }}">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span class="hd-cart-count">{{ Helper::cartCount() ? Helper::totalCartQuantity() : 0 }}</span>
                 </button>
 
-                <button type="button" class="hd-burger" id="hd-menu-open" aria-label="Menu">
+                <button type="button" class="hd-burger" id="hd-menu-open" aria-label="{{ __('frontend.open_menu') }}">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
@@ -625,8 +625,8 @@
 
 <aside class="hd-drawer" id="hd-drawer">
     <div class="hd-drawer-head">
-        <h5>{{ __('common.shopping_cart') }}</h5>
-        <button type="button" class="hd-drawer-close" id="hd-cart-close" aria-label="Close">
+        <h5>{{ __('frontend.shopping_cart') }}</h5>
+        <button type="button" class="hd-drawer-close" id="hd-cart-close" aria-label="{{ __('frontend.close_cart') }}">
             <i class="fa-solid fa-xmark"></i>
         </button>
     </div>
@@ -660,14 +660,14 @@
                     </span>
                 </div>
 
-                <a href="{{ route('cart-delete', $cart->id) }}" class="hd-item-remove" title="{{ __('common.remove') }}">
+                <a href="{{ route('cart-delete', $cart->id) }}" class="hd-item-remove" title="{{ __('frontend.remove_item') }}">
                     <i class="fa-solid fa-xmark"></i>
                 </a>
             </div>
         @empty
             <div class="hd-drawer-empty">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <p>{{ __('common.no_cart_available') }}</p>
+                <p>{{ __('frontend.empty_cart') }}</p>
             </div>
         @endforelse
     </div>
@@ -675,12 +675,12 @@
     @if(count($cartItems))
         <div class="hd-drawer-foot">
             <div class="hd-drawer-total">
-                <span>{{ __('common.total') }}</span>
+                <span>{{ __('frontend.cart_total') }}:</span>
                 <b>{{ $symbol }}{{ number_format(Helper::totalCartPrice(), $decimals, '.', ',') }}</b>
             </div>
             <div class="hd-drawer-actions">
-                <a href="{{ route('cart') }}" class="ct-submit hd-btn-outline">{{ __('common.view_cart') }}</a>
-                <a href="{{ route('checkout') }}" class="ct-submit">{{ __('common.checkout') }}</a>
+                <a href="{{ route('cart') }}" class="ct-submit hd-btn-outline">{{ __('frontend.view_cart') }}</a>
+                <a href="{{ route('checkout') }}" class="ct-submit">{{ __('frontend.checkout') }}</a>
             </div>
         </div>
     @endif
@@ -689,18 +689,18 @@
 <!-- Mobile menu -->
 <nav class="hd-mobile" id="hd-mobile">
     <div class="hd-mobile-head">
-        <img src="{{ asset('assets/img/logo/logo-1.png') }}" alt="Learn Withus">
-        <button type="button" class="hd-drawer-close" id="hd-menu-close" aria-label="Close">
+        <img src="{{ asset('assets/img/logo/logo-1.png') }}" alt="LearnWithUs">
+        <button type="button" class="hd-drawer-close" id="hd-menu-close" aria-label="{{ __('frontend.close_menu') }}">
             <i class="fa-solid fa-xmark"></i>
         </button>
     </div>
 
     <ul class="hd-mobile-nav">
-        <li><a href="{{ route('home') }}">{{ __('common.home') }}</a></li>
-        <li><a href="{{ route('product-lists') }}">{{ __('common.courses') }}</a></li>
+        <li><a href="{{ route('home') }}">{{ __('frontend.home') }}</a></li>
+        <li><a href="{{ route('product-lists') }}">{{ __('frontend.courses') }}</a></li>
 
         <li>
-            <span class="hd-mobile-label">{{ __('common.category') }}</span>
+            <span class="hd-mobile-label">{{ __('frontend.category_label') }}</span>
             <ul class="hd-mobile-sub">
                 @foreach($categories as $category)
                     <li><a href="{{ url('product-cat/'.$category->slug) }}">{{ $category->title }}</a></li>
@@ -708,17 +708,17 @@
             </ul>
         </li>
 
-        <li><span class="hd-mobile-label">{{ __('common.explore') }}</span></li>
-        <li><a href="{{ route('about-us') }}">{{ __('common.about') }}</a></li>
-        <li><a href="{{ route('contact') }}">{{ __('common.contact') }}</a></li>
+        <li><span class="hd-mobile-label">{{ __('frontend.explore_label') }}</span></li>
+        <li><a href="{{ route('about-us') }}">{{ __('frontend.about') }}</a></li>
+        <li><a href="{{ route('contact') }}">{{ __('frontend.contact') }}</a></li>
 
-        <li><span class="hd-mobile-label">{{ __('common.account') }}</span></li>
+        <li><span class="hd-mobile-label">{{ __('frontend.account') }}</span></li>
         @auth
-            <li><a href="{{ route('user') }}">{{ __('common.my_account') }}</a></li>
-            <li><a href="{{ route('user.logout') }}">{{ __('common.logout') }}</a></li>
+            <li><a href="{{ route('user') }}">{{ __('frontend.my_account') }}</a></li>
+            <li><a href="{{ route('user.logout') }}">{{ __('frontend.logout') }}</a></li>
         @else
-            <li><a href="{{ route('login.form') }}">{{ __('common.login') }}</a></li>
-            <li><a href="{{ route('register.form') }}">{{ __('common.register') }}</a></li>
+            <li><a href="{{ route('login.form') }}">{{ __('frontend.login') }}</a></li>
+            <li><a href="{{ route('register.form') }}">{{ __('frontend.register') }}</a></li>
         @endauth
     </ul>
 </nav>

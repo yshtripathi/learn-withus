@@ -26,8 +26,8 @@
 <x-breadcrumb
     :title="$product_detail->title"
     :items="[
-        ['label' => __('common.home'), 'url' => route('home')],
-        ['label' => __('common.shop'), 'url' => route('product-lists')],
+        ['label' => __('frontend.home'), 'url' => route('home')],
+        ['label' => __('frontend.shop'), 'url' => route('product-lists')],
         ['label' => $product_detail->title],
     ]" />
 
@@ -51,7 +51,7 @@
 
                     @if($product_detail->summary || $product_detail->description)
                         <div class="pd-block" data-aos="fade-up" data-aos-duration="800">
-                            <h2 class="pd-heading">{{ __('common.course_description') }}</h2>
+                            <h2 class="pd-heading">{{ __('frontend.course_description') }}</h2>
 
                             @if($product_detail->summary)
                                 <p class="pd-summary">{{ $product_detail->summary }}</p>
@@ -65,8 +65,8 @@
 
                     @if($levels->count())
                         <div class="pd-block" data-aos="fade-up" data-aos-duration="800">
-                            <span class="pd-eyebrow">{{ __('common.skill_level') }}</span>
-                            <h2 class="pd-heading">{{ __('common.choose_your_level') }}</h2>
+                            <span class="pd-eyebrow">{{ __('frontend.skill_level') }}</span>
+                            <h2 class="pd-heading">{{ __('frontend.choose_your_level') }}</h2>
 
                             <div class="pd-levels">
                                 @foreach($levels as $i => $level)
@@ -91,15 +91,15 @@
                         @foreach($levels as $i => $level)
                             <div class="pd-block pd-panel {{ $i === 0 ? 'is-active' : '' }}" data-panel="{{ $level->id }}">
                                 @if($level->localized('purpose'))
-                                    <h6>{{ __('common.purpose') }}</h6>
+                                    <h6>{{ __('frontend.purpose') }}</h6>
                                     <p>{{ $level->localized('purpose') }}</p>
                                 @endif
                                 @if($level->localized('learn_info'))
-                                    <h6>{{ __('common.what_you_will_learn') }}</h6>
+                                    <h6>{{ __('frontend.what_you_will_learn') }}</h6>
                                     <p>{{ $level->localized('learn_info') }}</p>
                                 @endif
                                 @if($level->localized('outcome'))
-                                    <h6>{{ __('common.outcome') }}</h6>
+                                    <h6>{{ __('frontend.outcome') }}</h6>
                                     <p>{{ $level->localized('outcome') }}</p>
                                 @endif
                             </div>
@@ -110,15 +110,15 @@
                 <!-- Right: sticky purchase card -->
                 <div class="col-lg-4">
                     <aside class="pd-buy" data-aos="fade-left" data-aos-duration="800">
-                        <span class="pd-eyebrow">{{ $product_detail->cat_info->title ?? __('common.course') }}</span>
+                        <span class="pd-eyebrow">{{ $product_detail->cat_info->title ?? __('frontend.course') }}</span>
                         <h1 class="pd-heading">{{ $product_detail->title }}</h1>
 
                         @if($selected)
-                            <span class="pd-buy-label">{{ __('common.skill_level') }}</span>
+                            <span class="pd-buy-label">{{ __('frontend.skill_level') }}</span>
                             <span class="pd-buy-level" id="pd-level-name">{{ $selected->localized('skill_level') }}</span>
                         @endif
 
-                        <span class="pd-buy-label">{{ __('common.price') }}</span>
+                        <span class="pd-buy-label">{{ __('frontend.price') }}</span>
                         <span class="pd-buy-price" id="pd-price">
                             {{ $symbol }}
                             @if($selected)
@@ -130,20 +130,20 @@
 
                         <button type="submit" class="ct-submit" {{ $product_detail->stock <= 0 ? 'disabled' : '' }}>
                             <i class="fa-solid fa-cart-shopping"></i>
-                            <span>{{ $product_detail->stock <= 0 ? __('common.sold_out') : __('common.add_to_cart') }}</span>
+                            <span>{{ $product_detail->stock <= 0 ? __('frontend.sold_out') : __('frontend.add_to_cart') }}</span>
                         </button>
 
                         @if($product_detail->lectures || $product_detail->language)
                             <ul class="pd-meta">
                                 @if($product_detail->lectures)
                                     <li>
-                                        <span><i class="fa-solid fa-play"></i> {{ __('common.lectures') }}</span>
+                                        <span><i class="fa-solid fa-play"></i> {{ __('frontend.lectures') }}</span>
                                         <b>{{ $product_detail->lectures }}</b>
                                     </li>
                                 @endif
                                 @if($product_detail->language)
                                     <li>
-                                        <span><i class="fa-solid fa-globe"></i> {{ __('common.language') }}</span>
+                                        <span><i class="fa-solid fa-globe"></i> {{ __('frontend.language') }}</span>
                                         <b>{{ $product_detail->language }}</b>
                                     </li>
                                 @endif
@@ -162,7 +162,7 @@
 
         @if($related->count())
             <div class="pd-related">
-                <h2 class="pd-related-title">{{ __('common.related_courses') }}</h2>
+                <h2 class="pd-related-title">{{ __('frontend.related_courses') }}</h2>
 
                 <div class="row gy-4">
                     @foreach($related as $rel)
@@ -174,10 +174,10 @@
                             <article class="sh-card">
                                 <div class="sh-thumb">
                                     <img src="{{ asset($relPhoto[0]) }}" alt="{{ $rel->title }}">
-                                    <span class="sh-tag">{{ __('common.course') }}</span>
+                                    <span class="sh-tag">{{ __('frontend.course') }}</span>
                                     <div class="sh-overlay">
                                         <a href="{{ route('product-detail', $rel->slug) }}" class="sh-view">
-                                            <i class="fa-regular fa-eye"></i> {{ __('common.view_details') }}
+                                            <i class="fa-regular fa-eye"></i> {{ __('frontend.view_details') }}
                                         </a>
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@
                                     <div class="sh-foot">
                                         <span class="sh-price">
                                             @if($relLowest)
-                                                <small class="sh-from">{{ __('common.from') }}</small>
+                                                <small class="sh-from">{{ __('frontend.from') }}</small>
                                                 {{ $symbol }} {{ Helper::getProductPriceByCurrency($currency, $relLowest) }}
                                             @else
                                                 {{ $symbol }} {{ Helper::getProductPriceByCurrency($currency, $rel) }}

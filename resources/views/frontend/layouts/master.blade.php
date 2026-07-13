@@ -4,8 +4,8 @@
 	@include('frontend.layouts.head')	
 </head>
 <body>
-	@include('frontend.layouts.notification')
     @include('frontend.layouts.header')
+	@include('frontend.layouts.notification')
 	<main>
 	@yield('main-content')
 	</main>

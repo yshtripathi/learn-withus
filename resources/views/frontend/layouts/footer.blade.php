@@ -389,7 +389,7 @@
                 <div class="ap-footer-widget">
                     <div class="ap-footer-logo">
                         <a href="{{route('home')}}">
-                            <img src="{{ asset('assets/img/logo/logo-1.png') }}" alt="Logo">
+                            <img src="{{ asset('assets/img/logo/logo-1.png') }}" alt="LearnWithUs">
                         </a>
                     </div>
                     
@@ -399,7 +399,7 @@
                                 <i class="fa-regular fa-map-marker-alt"></i>
                             </div>
                             <div class="ap-contact-text">
-                                <span>@lang('common.address')</span>
+                                <span>{{ __('frontend.address') }}</span>
                                 <p>{{ env('APP_ADDRESS') }}</p>
                             </div>
                         </li>
@@ -408,7 +408,7 @@
                                 <i class="fa-solid fa-envelope"></i>
                             </div>
                             <div class="ap-contact-text">
-                                <span>@lang('common.email')</span>
+                                <span>{{ __('frontend.email') }}</span>
                                 <a href="mailto:{{ env('APP_EMAIL') }}">{{ env('APP_EMAIL') }}</a>
                             </div>
                         </li>
@@ -419,12 +419,12 @@
             <!-- Quick Links -->
             <div class="col-lg-3 col-md-6">
                 <div class="ap-footer-widget">
-                    <h3 class="ap-footer-title">{{ __('common.quick_links') }}</h3>
+                    <h3 class="ap-footer-title">{{ __('frontend.quick_links') }}</h3>
                     <ul class="ap-link-list">
-                        <li><a href="{{route('home')}}">{{ __('common.home') }}</a></li>
-                        <li><a href="{{ route('about-us') }}">{{ __('common.about') }}</a></li>
-                        <li><a href="{{ url('/product-lists') }}">{{ __('common.courses') }}</a></li>
-                        <li><a href="{{ route('contact') }}">{{ __('common.contact') }}</a></li>
+                        <li><a href="{{route('home')}}">{{ __('frontend.home') }}</a></li>
+                        <li><a href="{{ route('about-us') }}">{{ __('frontend.about') }}</a></li>
+                        <li><a href="{{ url('/product-lists') }}">{{ __('frontend.courses') }}</a></li>
+                        <li><a href="{{ route('contact') }}">{{ __('frontend.contact') }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -432,26 +432,26 @@
             <!-- Support & Newsletter -->
             <div class="col-lg-4 col-md-12">
                 <div class="ap-footer-widget">
-                    <h3 class="ap-footer-title">{{ __('common.support') }}</h3>
+                    <h3 class="ap-footer-title">{{ __('frontend.support') }}</h3>
                     <ul class="ap-link-list">
-                        <li><a href="{{ route('pages', 'terms-conditions') }}">{{ __('common.terms_policy') }}</a></li>
-                        <li><a href="{{ route('pages', 'privacy-policy') }}">{{ __('common.privacy_policy') }}</a></li>
-                        <li><a href="{{ route('pages', 'delivery-policy') }}">{{ __('common.delivery_policy') }}</a></li>
-                        <li><a href="{{ route('pages', 'refund-policy') }}">{{ __('common.refund_policy') }}</a></li>
+                        <li><a href="{{ route('pages', 'terms-conditions') }}">{{ __('frontend.terms_policy') }}</a></li>
+                        <li><a href="{{ route('pages', 'privacy-policy') }}">{{ __('frontend.privacy_policy') }}</a></li>
+                        <li><a href="{{ route('pages', 'delivery-policy') }}">{{ __('frontend.delivery_policy') }}</a></li>
+                        <li><a href="{{ route('pages', 'refund-policy') }}">{{ __('frontend.refund_policy') }}</a></li>
                     </ul>
                     
-                    <h4 class="ap-footer-title" style="font-size: 15px; margin-top: 30px; margin-bottom: 12px;">@lang('common.subscribe_our_newsletter')</h4>
+                    <h4 class="ap-footer-title" style="font-size: 15px; margin-top: 30px; margin-bottom: 12px;">{{ __('frontend.subscribe_newsletter') }}</h4>
                     <div class="ap-subscribe-box">
                         <div class="success_message">
                             <i class="fa-regular fa-circle-check"></i>
-                            <span>@lang('common.thank_you_for_sucessfully')</span>
+                            <span>{{ __('frontend.subscribe_success') }}</span>
                         </div>
                         <form class="ap-subscribe-form" id="subscribe-form">
                             <div class="form-item">
-                                <input type="email" placeholder="@lang('common.your_email_address')" class="form-control" required>
+                                <input type="email" placeholder="{{ __('frontend.your_email_address') }}" class="form-control" required>
                             </div>
-                            <button type="submit" class="ed-primary-btn">
-                                <span>@lang('common.subscribe_now')</span>
+                            <button type="submit" class="ed-primary-btn" aria-label="{{ __('frontend.subscribe_now') }}">
+                                <span>{{ __('frontend.subscribe_now') }}</span>
                                 <i class="fa-regular fa-paper-plane"></i>
                             </button>
                         </form>
@@ -467,7 +467,7 @@
             <div class="row align-items-center justify-content-between">
                 <div class="col-lg-6 col-12 text-center text-lg-start mb-3 mb-lg-0">
                     <p class="ap-copyright-text">
-                        © {{ date('Y') }} @lang('common.company_name'). @lang('common.all_right_reserved')
+                        © {{ date('Y') }} {{ __('frontend.platform_name') }}. {{ __('frontend.all_rights_reserved') }}
                     </p>
                 </div>
                 <div class="col-lg-6 col-12 text-center text-lg-end ap-payment-methods">
@@ -478,7 +478,7 @@
     </div>
 </footer>
 
-<button id="scrollup" class="scroll-to-top">
+<button id="scrollup" class="scroll-to-top" aria-label="{{ __('frontend.scroll_to_top') }}">
     <span><i class="fa-regular fa-arrow-up-long"></i></span>
 </button>
 

@@ -1,14 +1,14 @@
 @extends('frontend.layouts.master')
 
-@section('title','Forgot Password')
+@section('title', __('frontend.forgot_password_title'))
 
 @section('main-content')
 
 <x-breadcrumb
-    :title="__('common.forget_password')"
+    :title="__('frontend.forget_password')"
     :items="[
-        ['label' => __('common.home'), 'url' => route('home')],
-        ['label' => __('common.forget_password')],
+        ['label' => __('frontend.home'), 'url' => route('home')],
+        ['label' => __('frontend.forget_password')],
     ]" />
 
 <section class="ct-section">
@@ -19,17 +19,17 @@
                 <div class="ct-alert ct-alert-success">{{ session('success') ?? session('status') }}</div>
             @endif
 
-            <h2>{{ __('common.forget_password') }}</h2>
-            <p>{{ __('common.check_your_email') }}</p>
+            <h2>{{ __('frontend.forget_password') }}</h2>
+            <p>{{ __('frontend.check_your_email') }}</p>
 
             <form name="frmForgetPwd" id="frmForgetPwd" action="{{ route('password.email') }}" method="post" novalidate>
                 @csrf
 
                 <div class="ct-field @error('email') is-invalid @enderror">
-                    <label class="ct-label" for="email">{{ __('common.email') }} <span>*</span></label>
+                    <label class="ct-label" for="email">{{ __('frontend.email') }} <span>*</span></label>
                     <div class="ct-control has-icon">
                         <input type="email" name="email" id="email" class="ct-input"
-                               value="{{ old('email') }}" placeholder="{{ __('common.enter_email') }}">
+                               value="{{ old('email') }}" placeholder="{{ __('frontend.placeholder_email') }}">
                         <i class="ct-icon fa-regular fa-envelope"></i>
                     </div>
                     @error('email')<span class="ct-error">{{ $message }}</span>@enderror
@@ -39,24 +39,24 @@
                     <div class="ct-captcha">
                         <div class="ct-control">
                             <input type="text" name="captcha" id="captcha" class="ct-input"
-                                   autocomplete="off" placeholder="{{ __('common.fill_captcha') }}">
+                                   autocomplete="off" placeholder="{{ __('frontend.placeholder_captcha') }}">
                         </div>
                         <div class="ct-captcha-img">
                             @captcha
                         </div>
                     </div>
-                    @error('captcha')<span class="ct-error">{{ __('common.captcha_error') }}</span>@enderror
+                    @error('captcha')<span class="ct-error">{{ __('frontend.error_captcha_invalid') }}</span>@enderror
                 </div>
 
                 <button type="submit" class="ct-submit ct-submit-full">
-                    <span>{{ __('common.forget_password') }}</span>
+                    <span>{{ __('frontend.forget_password') }}</span>
                     <i class="fa-regular fa-paper-plane"></i>
                 </button>
             </form>
 
             <p class="ct-alt">
-                {{ __('common.dont_have_account') }}
-                <a href="{{ route('register.form') }}">{{ __('common.sign_up') }}</a>
+                {{ __('frontend.dont_have_account') }}
+                <a href="{{ route('register.form') }}">{{ __('frontend.sign_up') }}</a>
             </p>
         </div>
     </div>
@@ -76,8 +76,8 @@
                 captcha: "required"
             },
             messages: {
-                email: "{{ __('common.email_required') }}",
-                captcha: "{{ __('common.fill_it') }}"
+                email: "{{ __('frontend.error_email_required') }}",
+                captcha: "{{ __('frontend.error_captcha_required') }}"
             },
             errorPlacement: function (error, element) {
                 error.appendTo(element.closest('.ct-field'));

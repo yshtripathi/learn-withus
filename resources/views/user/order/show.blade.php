@@ -5,10 +5,10 @@
 @section('main-content')
 
 <x-breadcrumb
-    :title="__('common.order_detail')"
+    :title="__('frontend.order_detail')"
     :items="[
-        ['label' => __('common.home'), 'url' => route('home')],
-        ['label' => __('common.order_detail')],
+        ['label' => __('frontend.home'), 'url' => route('home')],
+        ['label' => __('frontend.order_detail')],
     ]" />
 
 @php
@@ -36,11 +36,11 @@
         <div class="or-actions">
             <a href="{{ route('user') }}" class="ct-submit os-btn-outline">
                 <i class="fa-solid fa-arrow-left"></i>
-                <span>{{ __('common.back') }}</span>
+                <span>{{ __('frontend.back') }}</span>
             </a>
             <a href="{{ route('order.pdf', $order->id) }}" class="ct-submit">
                 <i class="fa-solid fa-download"></i>
-                <span>{{ __('common.generate_pdf') }}</span>
+                <span>{{ __('frontend.generate_pdf') }}</span>
             </a>
         </div>
 
@@ -49,7 +49,7 @@
             <!-- Items -->
             <div class="col-lg-7">
                 <div class="or-panel" data-aos="fade-up" data-aos-duration="700">
-                    <h3>{{ __('common.your_order') }}</h3>
+                    <h3>{{ __('frontend.your_order') }}</h3>
 
                     @forelse($order->cart_info as $cart)
                         @php
@@ -70,7 +70,7 @@
                             @endif
 
                             <div class="or-item-info">
-                                <h4>{{ $product->title ?? __('common.product') }}</h4>
+                                <h4>{{ $product->title ?? __('frontend.product') }}</h4>
 
                                 @if($level)
                                     <span class="cr-badge">
@@ -80,7 +80,7 @@
                                 @endif
 
                                 <span class="or-item-qty">
-                                    {{ __('common.quantity') }}: <b>{{ $cart->quantity }}</b>
+                                    {{ __('frontend.quantity') }}: <b>{{ $cart->quantity }}</b>
                                 </span>
                             </div>
 
@@ -89,7 +89,7 @@
                             </span>
                         </div>
                     @empty
-                        <p class="or-item-qty">{{ __('common.no_cart_available') }}</p>
+                        <p class="or-item-qty">{{ __('frontend.no_cart_available') }}</p>
                     @endforelse
                 </div>
             </div>
@@ -97,47 +97,47 @@
             <!-- Order information -->
             <div class="col-lg-5">
                 <div class="or-panel" data-aos="fade-left" data-aos-duration="700">
-                    <h3>{{ __('common.order_information') }}</h3>
+                    <h3>{{ __('frontend.order_information') }}</h3>
 
                     <dl class="or-grid">
                         <div>
-                            <dt>{{ __('common.order_number') }}</dt>
+                            <dt>{{ __('frontend.order_number') }}</dt>
                             <dd>{{ $order->order_number }}</dd>
                         </div>
                         <div>
-                            <dt>{{ __('common.order_date') }}</dt>
+                            <dt>{{ __('frontend.order_date') }}</dt>
                             <dd>{{ $order->created_at ? $order->created_at->format('d M, Y') : '—' }}</dd>
                         </div>
                         <div>
-                            <dt>{{ __('common.name') }}</dt>
+                            <dt>{{ __('frontend.name') }}</dt>
                             <dd>{{ $order->first_name }} {{ $order->last_name }}</dd>
                         </div>
                         <div>
-                            <dt>{{ __('common.email') }}</dt>
+                            <dt>{{ __('frontend.email') }}</dt>
                             <dd>{{ $order->email }}</dd>
                         </div>
                         <div>
-                            <dt>{{ __('common.quantity') }}</dt>
+                            <dt>{{ __('frontend.quantity') }}</dt>
                             <dd>{{ $order->quantity }}</dd>
                         </div>
                         <div>
-                            <dt>{{ __('common.status') }}</dt>
+                            <dt>{{ __('frontend.status') }}</dt>
                             <dd><span class="or-status {{ $statusClass }}">{{ ucwords($order->status) }}</span></dd>
                         </div>
                         <div>
-                            <dt>{{ __('common.payment_method') }}</dt>
-                            <dd>{{ $order->payment_method ?: __('common.credit_card_debit_card') }}</dd>
+                            <dt>{{ __('frontend.payment_method') }}</dt>
+                            <dd>{{ $order->payment_method ?: __('frontend.credit_card_debit_card') }}</dd>
                         </div>
                         <div>
-                            <dt>{{ __('common.payment_status') }}</dt>
+                            <dt>{{ __('frontend.payment_status') }}</dt>
                             <dd><span class="or-status {{ $paymentClass }}">{{ ucwords($order->payment_status) }}</span></dd>
                         </div>
                         <div>
-                            <dt>{{ __('common.transaction_id') }}</dt>
+                            <dt>{{ __('frontend.transaction_id') }}</dt>
                             <dd>{{ $order->trans_id ?: '—' }}</dd>
                         </div>
                         <div>
-                            <dt>{{ __('common.total_amount') }}</dt>
+                            <dt>{{ __('frontend.total_amount') }}</dt>
                             <dd class="or-amount">{{ $symbol }}{{ $total }}</dd>
                         </div>
                     </dl>

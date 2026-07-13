@@ -15,22 +15,22 @@
 <section class="hm-hero" style="background-image: url('{{ asset('assets/images/i1.jpg') }}');">
     <div class="container">
         <div class="hm-hero-inner" data-aos="fade-right" data-aos-duration="1000">
-            <span class="hm-eyebrow">@lang('common.about_company')</span>
+            <span class="hm-eyebrow">@lang('frontend.about_company')</span>
 
             <h1>
-                @lang('common.start_learning_from')
-                <span>@lang('common.best_institutions')</span>
+                @lang('frontend.start_learning_from')
+                <span>@lang('frontend.best_institutions')</span>
             </h1>
 
-            <p>@lang('common.about_mission_text')</p>
+            <p>@lang('frontend.about_mission_text')</p>
 
             <div class="hm-hero-actions">
                 <a href="{{ route('product-lists') }}" class="ct-submit">
                     <i class="fa-solid fa-palette"></i>
-                    <span>@lang('common.hero_get_started')</span>
+                    <span>@lang('frontend.hero_get_started')</span>
                 </a>
                 <a href="{{ route('about-us') }}" class="ct-submit hm-btn-ghost">
-                    <span>@lang('common.about')</span>
+                    <span>@lang('frontend.about')</span>
                 </a>
             </div>
         </div>
@@ -59,7 +59,7 @@
 
                         <div class="hm-collage-note">
                             <b>{{ $category_lists->sum(fn($c) => count($c->products)) }}+</b>
-                            <span>@lang('common.courses_within_subject')</span>
+                            <span>@lang('frontend.courses_within_subject')</span>
                         </div>
                     </div>
                 </div>
@@ -68,15 +68,15 @@
             <div class="col-lg-6">
                 <div data-aos="fade-left" data-aos-duration="1000">
                     <span class="hm-eyebrow" style="color: var(--ed-color-theme-secondary);">
-                        @lang('common.why_choose_us')
+                        @lang('frontend.why_choose_us')
                     </span>
-                    <h2 class="au-title">@lang('common.about_high_impact_learning')</h2>
+                    <h2 class="au-title">@lang('frontend.about_high_impact_learning')</h2>
 
                     @php
                         $reasons = [
-                            ['icon' => 'fa-ruler-combined', 'title' => __('common.about_our_mission'), 'text' => __('common.about_mission_1')],
-                            ['icon' => 'fa-users',          'title' => __('common.about_our_vision'),  'text' => __('common.about_mission_2')],
-                            ['icon' => 'fa-layer-group',    'title' => __('common.about_our_goal'),    'text' => __('common.about_goal_text')],
+                            ['icon' => 'fa-ruler-combined', 'title' => __('frontend.about_our_mission'), 'text' => __('frontend.about_mission_1')],
+                            ['icon' => 'fa-users',          'title' => __('frontend.about_our_vision'),  'text' => __('frontend.about_mission_2')],
+                            ['icon' => 'fa-layer-group',    'title' => __('frontend.about_our_goal'),    'text' => __('frontend.about_goal_text')],
                         ];
                     @endphp
 
@@ -99,8 +99,8 @@
 <section class="nf-section">
     <div class="container">
         <div class="nf-section-head" data-aos="fade-up" data-aos-duration="800">
-            <h2>@lang('common.explore_our_courses')</h2>
-            <p>@lang('common.top_course_category')</p>
+            <h2>@lang('frontend.explore_our_courses')</h2>
+            <p>@lang('frontend.top_course_category')</p>
         </div>
 
         @foreach($category_lists as $cat)
@@ -117,10 +117,10 @@
 
                     <div>
                         <h3>{{ $cat->title }}</h3>
-                        <small>{{ count($courses) }} {{ count($courses) === 1 ? __('common.course') : __('common.courses') }}</small>
+                        <small>{{ count($courses) }} {{ count($courses) === 1 ? __('frontend.course') : __('frontend.courses') }}</small>
                     </div>
                     <a href="{{ url('product-cat/'.$cat->slug) }}" class="nf-viewall">
-                        @lang('common.explore_more') <i class="fa-solid fa-arrow-right"></i>
+                        @lang('frontend.explore_more') <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
 
@@ -145,7 +145,7 @@
                                         <h4 class="nf-card-title">{{ $course->title }}</h4>
                                         <span class="nf-price">
                                             @if($lowest)
-                                                {{ __('common.from') }}
+                                                {{ __('frontend.from') }}
                                                 {{ $course->getCurrencySymbol() }}{{ Helper::getProductPriceByCurrency($currency, $lowest) }}
                                             @else
                                                 {{ $course->getCurrencySymbol() }}{{ Helper::getProductPriceByCurrency($currency, $course) }}
@@ -161,7 +161,7 @@
                         </button>
                     </div>
                 @else
-                    <p class="nf-empty">{{ __('common.no_products_found') }}</p>
+                    <p class="nf-empty">{{ __('frontend.no_products_found') }}</p>
                 @endif
             </div>
         @endforeach
@@ -172,9 +172,9 @@
 <section class="st-section">
     <div class="container">
         <div class="st-intro" data-aos="fade-up" data-aos-duration="800">
-            <span class="hm-eyebrow">@lang('common.inside_the_studio')</span>
-            <h2>@lang('common.studio_title') <span>@lang('common.studio_title_accent')</span></h2>
-            <p>@lang('common.studio_text')</p>
+            <span class="hm-eyebrow">@lang('frontend.inside_the_studio')</span>
+            <h2>@lang('frontend.studio_title') <span>@lang('frontend.studio_title_accent')</span></h2>
+            <p>@lang('frontend.studio_text')</p>
         </div>
 
         <div class="row gy-4 align-items-stretch">
@@ -182,12 +182,12 @@
                 <article class="st-card">
                     <div class="st-media">
                         <img src="{{ asset('assets/images/i6.jpg') }}"
-                             alt="@lang('common.studio_card_1_title')"
+                             alt="@lang('frontend.studio_card_1_title')"
                              width="4256" height="2832" loading="lazy">
                     </div>
                     <div class="st-body">
-                        <h3>@lang('common.studio_card_1_title')</h3>
-                        <p>@lang('common.studio_card_1_text')</p>
+                        <h3>@lang('frontend.studio_card_1_title')</h3>
+                        <p>@lang('frontend.studio_card_1_text')</p>
                     </div>
                 </article>
             </div>
@@ -196,12 +196,12 @@
                 <article class="st-card">
                     <div class="st-media">
                         <img src="{{ asset('assets/images/i10.jpg') }}"
-                             alt="@lang('common.studio_card_2_title')"
+                             alt="@lang('frontend.studio_card_2_title')"
                              width="1920" height="1280" loading="lazy">
                     </div>
                     <div class="st-body">
-                        <h3>@lang('common.studio_card_2_title')</h3>
-                        <p>@lang('common.studio_card_2_text')</p>
+                        <h3>@lang('frontend.studio_card_2_title')</h3>
+                        <p>@lang('frontend.studio_card_2_text')</p>
                     </div>
                 </article>
             </div>
@@ -210,7 +210,7 @@
         <div class="st-cta" data-aos="fade-up" data-aos-duration="800">
             <a href="{{ route('product-lists') }}" class="ct-submit">
                 <i class="fa-solid fa-palette"></i>
-                <span>@lang('common.browse_all_courses')</span>
+                <span>@lang('frontend.browse_all_courses')</span>
             </a>
         </div>
     </div>

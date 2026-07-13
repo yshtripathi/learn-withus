@@ -3,10 +3,10 @@
 @section('main-content')
 
 <x-breadcrumb
-    :title="__('common.my_account')"
+    :title="__('frontend.my_account')"
     :items="[
-        ['label' => __('common.home'), 'url' => route('home')],
-        ['label' => __('common.my_account')],
+        ['label' => __('frontend.home'), 'url' => route('home')],
+        ['label' => __('frontend.my_account')],
     ]" />
 
 @php
@@ -43,7 +43,7 @@
                                 class="ac-nav-item {{ $activeTab === 'orders' ? 'is-active' : '' }}"
                                 data-tab="orders">
                             <i class="fa-regular fa-file-lines"></i>
-                            {{ __('common.order_detail') }}
+                            {{ __('frontend.order_detail') }}
                             <span class="ac-count">{{ $orders->total() }}</span>
                         </button>
 
@@ -51,7 +51,7 @@
                                 class="ac-nav-item {{ $activeTab === 'password' ? 'is-active' : '' }}"
                                 data-tab="password">
                             <i class="fa-solid fa-shield-halved"></i>
-                            {{ __('common.change_password') }}
+                            {{ __('frontend.change_password') }}
                         </button>
                     </nav>
                 </aside>
@@ -64,7 +64,7 @@
                 <div class="ac-panel {{ $activeTab === 'orders' ? 'is-active' : '' }}" data-panel="orders">
                     @if(count($orders))
                         <div class="or-head">
-                            <h2>{{ __('common.order_detail') }}</h2>
+                            <h2>{{ __('frontend.order_detail') }}</h2>
                         </div>
 
                         @foreach($orders as $order)
@@ -83,30 +83,30 @@
 
                             <article class="or-card">
                                 <div class="or-num">
-                                    <small>{{ __('common.order_number') }}</small>
+                                    <small>{{ __('frontend.order_number') }}</small>
                                     <b>{{ $order->order_number }}</b>
                                 </div>
 
                                 <div class="or-cell">
-                                    <small>{{ __('common.order_date') }}</small>
+                                    <small>{{ __('frontend.order_date') }}</small>
                                     <span>{{ $order->created_at ? $order->created_at->format('d M, Y') : '—' }}</span>
                                 </div>
 
                                 <div class="or-cell">
-                                    <small>{{ __('common.total_amount') }}</small>
+                                    <small>{{ __('frontend.total_amount') }}</small>
                                     <span class="or-amount">
                                         {{ $symbol }}{{ number_format($order->total_amount, $decimals) }}
                                     </span>
                                 </div>
 
                                 <div class="or-cell">
-                                    <small>{{ __('common.status') }}</small>
+                                    <small>{{ __('frontend.status') }}</small>
                                     <span class="or-status {{ $statusClass }}">{{ ucwords($order->status) }}</span>
                                 </div>
 
                                 <a href="{{ route('user.order.show', $order->id) }}" class="or-view">
                                     <i class="fa-regular fa-eye"></i>
-                                    {{ __('common.view_details') }}
+                                    {{ __('frontend.view_details') }}
                                 </a>
                             </article>
                         @endforeach
@@ -119,11 +119,11 @@
                     @else
                         <div class="or-empty">
                             <i class="fa-regular fa-file-lines"></i>
-                            <h4>{{ __('common.no_orders_found') }}</h4>
-                            <p>{{ __('common.try_another_category') }}</p>
+                            <h4>{{ __('frontend.no_orders_found') }}</h4>
+                            <p>{{ __('frontend.try_another_category') }}</p>
                             <a href="{{ route('product-lists') }}" class="ct-submit">
                                 <i class="fa-solid fa-palette"></i>
-                                <span>{{ __('common.browse_all_courses') }}</span>
+                                <span>{{ __('frontend.browse_all_courses') }}</span>
                             </a>
                         </div>
                     @endif
@@ -132,14 +132,14 @@
                 <!-- Change password -->
                 <div class="ac-panel {{ $activeTab === 'password' ? 'is-active' : '' }}" data-panel="password">
                     <div class="ct-card">
-                        <h2>{{ __('common.change_password') }}</h2>
-                        <p>{{ __('common.password_min') }}</p>
+                        <h2>{{ __('frontend.change_password') }}</h2>
+                        <p>{{ __('frontend.instruction_password_min') }}</p>
 
                         <form action="{{ route('change.password') }}" method="POST" id="frmChangePassword" novalidate>
                             @csrf
 
                             <div class="ct-field @error('current_password') is-invalid @enderror">
-                                <label class="ct-label" for="current_password">{{ __('common.current_password') }} <span>*</span></label>
+                                <label class="ct-label" for="current_password">{{ __('frontend.current_password') }} <span>*</span></label>
                                 <div class="ct-control has-icon">
                                     <input type="password" name="current_password" id="current_password" class="ct-input">
                                     <i class="ct-icon fa-solid fa-lock"></i>
@@ -150,7 +150,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="ct-field @error('new_password') is-invalid @enderror">
-                                        <label class="ct-label" for="new_password">{{ __('common.new_password') }} <span>*</span></label>
+                                        <label class="ct-label" for="new_password">{{ __('frontend.new_password') }} <span>*</span></label>
                                         <div class="ct-control has-icon">
                                             <input type="password" name="new_password" id="new_password" class="ct-input">
                                             <i class="ct-icon fa-solid fa-key"></i>
@@ -161,7 +161,7 @@
 
                                 <div class="col-md-6">
                                     <div class="ct-field @error('new_confirm_password') is-invalid @enderror">
-                                        <label class="ct-label" for="new_confirm_password">{{ __('common.confirm_password') }} <span>*</span></label>
+                                        <label class="ct-label" for="new_confirm_password">{{ __('frontend.confirm_password') }} <span>*</span></label>
                                         <div class="ct-control has-icon">
                                             <input type="password" name="new_confirm_password" id="new_confirm_password" class="ct-input">
                                             <i class="ct-icon fa-solid fa-key"></i>
@@ -173,7 +173,7 @@
 
                             <button type="submit" class="ct-submit">
                                 <i class="fa-solid fa-shield-halved"></i>
-                                <span>{{ __('common.change_password') }}</span>
+                                <span>{{ __('frontend.change_password') }}</span>
                             </button>
                         </form>
                     </div>
@@ -221,14 +221,14 @@
                 new_confirm_password: { required: true, equalTo: "#new_password" }
             },
             messages: {
-                current_password: "{{ __('common.password_required') }}",
+                current_password: "{{ __('frontend.error_password_required') }}",
                 new_password: {
-                    required: "{{ __('common.password_required') }}",
-                    minlength: "{{ __('common.password_min') }}"
+                    required: "{{ __('frontend.error_password_required') }}",
+                    minlength: "{{ __('frontend.error_password_min') }}"
                 },
                 new_confirm_password: {
-                    required: "{{ __('common.password_required') }}",
-                    equalTo: "{{ __('common.password_not_match') }}"
+                    required: "{{ __('frontend.error_password_required') }}",
+                    equalTo: "{{ __('frontend.error_password_not_match') }}"
                 }
             },
             // .ct-field is a block, so the message lands under the input.

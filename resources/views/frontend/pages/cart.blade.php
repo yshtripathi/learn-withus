@@ -3,10 +3,10 @@
 @section('main-content')
 
 <x-breadcrumb
-    :title="__('common.cart')"
+    :title="__('frontend.cart')"
     :items="[
-        ['label' => __('common.home'), 'url' => route('home')],
-        ['label' => __('common.cart')],
+        ['label' => __('frontend.home'), 'url' => route('home')],
+        ['label' => __('frontend.cart')],
     ]" />
 
 @php
@@ -25,8 +25,8 @@
                 <!-- Line items -->
                 <div class="col-lg-8">
                     <div class="cr-head">
-                        <h2>{{ __('common.cart') }}</h2>
-                        <span>{{ count($items) }} {{ count($items) === 1 ? __('common.item') : __('common.items') }}</span>
+                        <h2>{{ __('frontend.cart') }}</h2>
+                        <span>{{ count($items) }} {{ count($items) === 1 ? __('frontend.item') : __('frontend.items') }}</span>
                     </div>
 
                     @foreach($items as $cart)
@@ -54,7 +54,7 @@
                                     </span>
                                 @else
                                     {{-- Added before levels were recorded, or added without picking one. --}}
-                                    <span class="cr-badge cr-badge-none">{{ __('common.no_level_selected') }}</span>
+                                    <span class="cr-badge cr-badge-none">{{ __('frontend.no_level_selected') }}</span>
                                 @endif
 
                                 <p class="cr-unit">
@@ -67,7 +67,7 @@
                                 <span class="cr-amount">
                                     {{ $symbol }} {{ number_format($cart['amount'], $decimals, '.', ',') }}
                                 </span>
-                                <a href="{{ route('cart-delete', $cart->id) }}" class="cr-remove" title="{{ __('common.remove') }}">
+                                <a href="{{ route('cart-delete', $cart->id) }}" class="cr-remove" title="{{ __('frontend.remove') }}">
                                     <i class="fa-solid fa-xmark"></i>
                                 </a>
                             </div>
@@ -78,7 +78,7 @@
                 <!-- Summary -->
                 <div class="col-lg-4">
                     <aside class="cr-summary" data-aos="fade-left" data-aos-duration="800">
-                        <h3>{{ __('common.order_summary') }}</h3>
+                        <h3>{{ __('frontend.order_summary') }}</h3>
 
                         @foreach($items as $cart)
                             <div class="cr-row">
@@ -88,17 +88,17 @@
                         @endforeach
 
                         <div class="cr-total">
-                            <span>{{ __('common.total') }}</span>
+                            <span>{{ __('frontend.total') }}:</span>
                             <b>{{ $symbol }} {{ number_format(Helper::totalCartPrice(), $decimals, '.', ',') }}</b>
                         </div>
 
                         <a href="{{ route('checkout') }}" class="ct-submit">
-                            <span>{{ __('common.checkout') }}</span>
+                            <span>{{ __('frontend.checkout') }}</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </a>
 
                         <a href="{{ route('product-lists') }}" class="cr-continue">
-                            {{ __('common.continue_shopping') }}
+                            {{ __('frontend.continue_shopping') }}
                         </a>
                     </aside>
                 </div>
@@ -106,11 +106,11 @@
         @else
             <div class="cr-empty" data-aos="fade-up" data-aos-duration="800">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <h4>{{ __('common.no_cart_available') }}</h4>
-                <p>{{ __('common.try_another_category') }}</p>
+                <h4>{{ __('frontend.no_cart_available') }}</h4>
+                <p>{{ __('frontend.try_another_category') }}</p>
                 <a href="{{ route('product-lists') }}" class="ct-submit">
                     <i class="fa-solid fa-palette"></i>
-                    <span>{{ __('common.continue_shopping') }}</span>
+                    <span>{{ __('frontend.continue_shopping') }}</span>
                 </a>
             </div>
         @endif

@@ -121,11 +121,11 @@
 </style>
 
 <x-breadcrumb
-    :title="__('common.checkout')"
+    :title="__('frontend.checkout')"
     :items="[
-        ['label' => __('common.home'), 'url' => route('home')],
-        ['label' => __('common.cart'), 'url' => route('cart')],
-        ['label' => __('common.checkout')],
+        ['label' => __('frontend.home'), 'url' => route('home')],
+        ['label' => __('frontend.cart'), 'url' => route('cart')],
+        ['label' => __('frontend.checkout')],
     ]" />
 
 @php
@@ -149,14 +149,14 @@
                     <div class="ct-card mb-4" data-aos="fade-up" data-aos-duration="700">
                         <div class="co-step">
                             <span class="co-step-num">1</span>
-                            <h3>{{ __('common.billing_details') }}</h3>
+                            <h3>{{ __('frontend.billing_details') }}</h3>
                         </div>
 
                         <div class="ct-field @error('email') is-invalid @enderror">
-                            <label class="ct-label" for="email">{{ __('common.email') }} <span>*</span></label>
+                            <label class="ct-label" for="email">{{ __('frontend.email') }} <span>*</span></label>
                             <div class="ct-control has-icon">
                                 <input type="email" name="email" id="email" class="ct-input"
-                                       value="{{ old('email', $user->email ?? '') }}" placeholder="{{ __('common.enter_email') }}">
+                                       value="{{ old('email', $user->email ?? '') }}" placeholder="{{ __('frontend.placeholder_email') }}">
                                 <i class="ct-icon fa-regular fa-envelope"></i>
                             </div>
                             @error('email')<span class="ct-error">{{ $message }}</span>@enderror
@@ -165,7 +165,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="ct-field @error('first_name') is-invalid @enderror">
-                                    <label class="ct-label" for="first_name">{{ __('common.first_name') }} <span>*</span></label>
+                                    <label class="ct-label" for="first_name">{{ __('frontend.first_name') }} <span>*</span></label>
                                     <div class="ct-control">
                                         <input type="text" name="first_name" id="first_name" class="ct-input"
                                                value="{{ old('first_name', $user->first_name ?? '') }}">
@@ -175,7 +175,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="ct-field @error('last_name') is-invalid @enderror">
-                                    <label class="ct-label" for="last_name">{{ __('common.last_name') }} <span>*</span></label>
+                                    <label class="ct-label" for="last_name">{{ __('frontend.last_name') }} <span>*</span></label>
                                     <div class="ct-control">
                                         <input type="text" name="last_name" id="last_name" class="ct-input"
                                                value="{{ old('last_name', $user->last_name ?? '') }}">
@@ -186,10 +186,10 @@
                         </div>
 
                         <div class="ct-field @error('country') is-invalid @enderror">
-                            <label class="ct-label" for="billing_country">{{ __('common.country') }} <span>*</span></label>
+                            <label class="ct-label" for="billing_country">{{ __('frontend.country') }} <span>*</span></label>
                             <div class="ct-control">
                                 <select name="country" id="billing_country" class="ct-input" autocomplete="country">
-                                    <option value="">{{ __('common.select_country') }}</option>
+                                    <option value="">{{ __('frontend.select_country') }}</option>
                                     @include('frontend.layouts._countries')
                                 </select>
                             </div>
@@ -197,7 +197,7 @@
                         </div>
 
                         <div class="ct-field @error('address1') is-invalid @enderror">
-                            <label class="ct-label" for="address">{{ __('common.street_address') }} <span>*</span></label>
+                            <label class="ct-label" for="address">{{ __('frontend.street_address') }} <span>*</span></label>
                             <div class="ct-control">
                                 <input type="text" name="address1" id="address" class="ct-input"
                                        value="{{ old('address1', $user->address ?? '') }}">
@@ -208,7 +208,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="ct-field @error('city') is-invalid @enderror">
-                                    <label class="ct-label" for="city">{{ __('common.town_city') }} <span>*</span></label>
+                                    <label class="ct-label" for="city">{{ __('frontend.town_city') }} <span>*</span></label>
                                     <div class="ct-control">
                                         <input type="text" name="city" id="city" class="ct-input"
                                                value="{{ old('city', $user->city ?? '') }}">
@@ -218,7 +218,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="ct-field @error('state') is-invalid @enderror">
-                                    <label class="ct-label" for="state">{{ __('common.state') }}</label>
+                                    <label class="ct-label" for="state">{{ __('frontend.state') }}</label>
                                     <div class="ct-control">
                                         <input type="text" name="state" id="state" class="ct-input"
                                                value="{{ old('state', $user->state ?? '') }}">
@@ -231,7 +231,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="ct-field @error('post_code') is-invalid @enderror">
-                                    <label class="ct-label" for="post_code">{{ __('common.zip_code') }} <span>*</span></label>
+                                    <label class="ct-label" for="post_code">{{ __('frontend.zip_code') }} <span>*</span></label>
                                     <div class="ct-control">
                                         <input type="text" name="post_code" id="post_code" class="ct-input"
                                                value="{{ old('post_code', $user->post_code ?? '') }}">
@@ -241,7 +241,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="ct-field @error('phone') is-invalid @enderror">
-                                    <label class="ct-label" for="phone">{{ __('common.phone') }} <span>*</span></label>
+                                    <label class="ct-label" for="phone">{{ __('frontend.phone') }} <span>*</span></label>
                                     <div class="ct-control has-icon">
                                         <input type="text" name="phone" id="phone" class="ct-input"
                                                value="{{ old('phone', $user->phone ?? '') }}" inputmode="tel"
@@ -254,7 +254,7 @@
                         </div>
 
                         <div class="ct-field">
-                            <label class="ct-label" for="form_order_notes">{{ __('common.order_notes') }}</label>
+                            <label class="ct-label" for="form_order_notes">{{ __('frontend.order_notes') }}</label>
                             <div class="ct-control">
                                 <textarea name="form_order_notes" id="form_order_notes" rows="4" class="ct-input">{{ old('form_order_notes') }}</textarea>
                             </div>
@@ -265,20 +265,20 @@
                     <div class="ct-card mb-4" data-aos="fade-up" data-aos-duration="700">
                         <div class="co-step">
                             <span class="co-step-num">2</span>
-                            <h3>{{ __('common.choose_payment_method') }}</h3>
+                            <h3>{{ __('frontend.choose_payment_method') }}</h3>
                         </div>
 
                         <div class="ct-field">
-                            <label class="ct-label" for="name_on_card">{{ __('common.card_holder_name') }} <span>*</span></label>
+                            <label class="ct-label" for="name_on_card">{{ __('frontend.card_holder_name') }} <span>*</span></label>
                             <div class="ct-control has-icon">
                                 <input type="text" name="name" id="name_on_card" class="ct-input"
-                                       placeholder="{{ __('common.card_holder_name') }}">
+                                       placeholder="{{ __('frontend.card_holder_name') }}">
                                 <i class="ct-icon fa-regular fa-user"></i>
                             </div>
                         </div>
 
                         <div class="ct-field">
-                            <label class="ct-label" for="card_number">{{ __('common.card_number') }} <span>*</span></label>
+                            <label class="ct-label" for="card_number">{{ __('frontend.card_number') }} <span>*</span></label>
                             <div class="ct-control has-icon">
                                 <input type="text" name="card_number" id="card_number" class="ct-input cc-number"
                                        placeholder="0000 0000 0000 0000" inputmode="numeric"
@@ -290,7 +290,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="ct-field">
-                                    <label class="ct-label" for="expiry_month">{{ __('common.card_expiry') }} <span>*</span></label>
+                                    <label class="ct-label" for="expiry_month">{{ __('frontend.card_expiry') }} <span>*</span></label>
                                     <div class="co-expiry">
                                         <div class="ct-control">
                                             <input type="text" name="expiry_month" id="expiry_month" class="ct-input"
@@ -308,10 +308,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="ct-field">
-                                    <label class="ct-label" for="cvv">{{ __('common.card_cvc') }} <span>*</span></label>
+                                    <label class="ct-label" for="cvv">{{ __('frontend.card_cvc') }} <span>*</span></label>
                                     <div class="ct-control has-icon">
                                         <input type="text" name="cvv" id="cvv" class="ct-input cc-cvc"
-                                               placeholder="{{ __('common.card_cvc') }}" inputmode="numeric"
+                                               placeholder="{{ __('frontend.card_cvc') }}" inputmode="numeric"
                                                oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                         <i class="ct-icon fa-solid fa-lock"></i>
                                     </div>
@@ -323,17 +323,17 @@
                             <div class="ct-captcha">
                                 <div class="ct-control">
                                     <input type="text" name="captcha" id="captcha" class="ct-input"
-                                           autocomplete="off" placeholder="{{ __('common.fill_captcha') }}">
+                                           autocomplete="off" placeholder="{{ __('frontend.placeholder_captcha') }}">
                                 </div>
                                 <div class="ct-captcha-img">
                                     @captcha
                                 </div>
                             </div>
-                            @error('captcha')<span class="ct-error">{{ __('common.captcha_error') }}</span>@enderror
+                            @error('captcha')<span class="ct-error">{{ __('frontend.error_captcha_invalid') }}</span>@enderror
                         </div>
 
                         <p class="co-pay-note">
-                            {{ __('common.when_you_purchase') }}
+                            {{ __('frontend.when_you_purchase') }}
                             <img src="{{ asset('assets/images/dba.png') }}" alt="dba">
                         </p>
 
@@ -346,15 +346,15 @@
                     <div class="ct-card co-agree" data-aos="fade-up" data-aos-duration="700">
                         <div class="co-step">
                             <span class="co-step-num">3</span>
-                            <h3>{{ __('common.terms_policy') }}</h3>
+                            <h3>{{ __('frontend.terms_policy') }}</h3>
                         </div>
 
                         @php
                             $agreements = [
-                                ['name' => 'terms',    'slug' => 'terms-conditions', 'label' => __('common.terms_policy')],
-                                ['name' => 'privacy',  'slug' => 'privacy-policy',   'label' => __('common.privacy_policy')],
-                                ['name' => 'delivery', 'slug' => 'delivery-policy',  'label' => __('common.delivery_policy')],
-                                ['name' => 'refund',   'slug' => 'refund-policy',    'label' => __('common.refund_policy')],
+                                ['name' => 'terms',    'slug' => 'terms-conditions', 'label' => __('frontend.terms_policy')],
+                                ['name' => 'privacy',  'slug' => 'privacy-policy',   'label' => __('frontend.privacy_policy')],
+                                ['name' => 'delivery', 'slug' => 'delivery-policy',  'label' => __('frontend.delivery_policy')],
+                                ['name' => 'refund',   'slug' => 'refund-policy',    'label' => __('frontend.refund_policy')],
                             ];
                         @endphp
 
@@ -363,7 +363,7 @@
                                 <div class="ct-check">
                                     <input type="checkbox" name="{{ $agreement['name'] }}" id="{{ $agreement['name'] }}" value="1">
                                     <label for="{{ $agreement['name'] }}">
-                                        {{ __('common.terms_agreement') }}
+                                        {{ __('frontend.terms_agreement') }}
                                         <a href="{{ route('pages', $agreement['slug']) }}" target="_blank">{{ $agreement['label'] }}</a>
                                     </label>
                                 </div>
@@ -375,7 +375,7 @@
                 <!-- Right: order summary -->
                 <div class="col-lg-5">
                     <aside class="cr-summary" data-aos="fade-left" data-aos-duration="800">
-                        <h3>{{ __('common.your_order') }}</h3>
+                        <h3>{{ __('frontend.your_order') }}</h3>
 
                         @forelse($items as $cart)
                             @php
@@ -394,27 +394,27 @@
                                             {{ $level->localized('skill_level') }}
                                         </span>
                                     @endif
-                                    <span class="co-item-qty">{{ __('common.quantity') }}: <b>{{ $cart->quantity }}</b></span>
+                                    <span class="co-item-qty">{{ __('frontend.quantity') }}: <b>{{ $cart->quantity }}</b></span>
                                 </div>
                                 <span class="co-item-amount">
                                     {{ $symbol }} {{ number_format($cart['amount'], $decimals, '.', ',') }}
                                 </span>
                             </div>
                         @empty
-                            <p class="cr-row">{{ __('common.no_cart_available') }}</p>
+                            <p class="cr-row">{{ __('frontend.no_cart_available') }}</p>
                         @endforelse
 
                         <div class="cr-total">
-                            <span>{{ __('common.total') }}</span>
+                            <span>{{ __('frontend.total') }}:</span>
                             <b>{{ $symbol }} {{ number_format(Helper::totalCartPrice(), $decimals, '.', ',') }}</b>
                         </div>
 
                         <button type="submit" class="ct-submit">
                             <i class="fa-solid fa-lock"></i>
-                            <span>{{ __('common.place_order') }}</span>
+                            <span>{{ __('frontend.place_order') }}</span>
                         </button>
 
-                        <a href="{{ route('cart') }}" class="cr-continue">{{ __('common.cart') }}</a>
+                        <a href="{{ route('cart') }}" class="cr-continue">{{ __('frontend.cart') }}</a>
                     </aside>
                 </div>
             </div>
@@ -474,19 +474,19 @@
             var number = digits(value);
             var type = cardType(number);
             return !!type && luhnValid(number) && type.pattern_lengths.indexOf(number.length) >= 0;
-        }, "{{ __('common.card_number_invalid') }}");
+        }, "{{ __('frontend.error_card_number_invalid') }}");
 
         $.validator.addMethod('cardname', function (value, element) {
             return this.optional(element) || /^[a-z ,.'-]+$/i.test(value);
-        }, "{{ __('common.card_name_invalid') }}");
+        }, "{{ __('frontend.error_card_name_invalid') }}");
 
         $.validator.addMethod('expmonth', function (value, element) {
             return this.optional(element) || /^(0[1-9]|1[0-2])$/.test(value);
-        }, "{{ __('common.card_month_invalid') }}");
+        }, "{{ __('frontend.error_card_month_invalid') }}");
 
         $.validator.addMethod('expyear', function (value, element) {
             return this.optional(element) || /^\d{4}$/.test(value);
-        }, "{{ __('common.card_year_invalid') }}");
+        }, "{{ __('frontend.error_card_year_invalid') }}");
 
         // Reads the month field too, so "12 / 2020" is caught as expired.
         $.validator.addMethod('notexpired', function (value, element) {
@@ -499,11 +499,11 @@
             if (year < now.getFullYear()) return false;
             if (year === now.getFullYear() && month < now.getMonth() + 1) return false;
             return true;
-        }, "{{ __('common.card_expired') }}");
+        }, "{{ __('frontend.error_card_expired') }}");
 
         $.validator.addMethod('cvcformat', function (value, element) {
             return this.optional(element) || /^[0-9]{3,4}$/.test(digits(value));
-        }, "{{ __('common.card_cvc_invalid') }}");
+        }, "{{ __('frontend.error_card_cvc_invalid') }}");
 
         // Card input masks + live card-brand icon.
         $('.cc-number').payment('formatCardNumber');
@@ -541,30 +541,30 @@
                 captcha: "required"
             },
             messages: {
-                first_name: "{{ __('common.name_required') }}",
-                last_name: "{{ __('common.name_required') }}",
-                email: "{{ __('common.email_required') }}",
+                first_name: "{{ __('frontend.error_name_required') }}",
+                last_name: "{{ __('frontend.error_name_required') }}",
+                email: "{{ __('frontend.error_email_required') }}",
                 phone: {
-                    required: "{{ __('common.phone_required') }}",
-                    minlength: "{{ __('common.phone_min') }}"
+                    required: "{{ __('frontend.error_phone_required') }}",
+                    minlength: "{{ __('frontend.error_phone_min') }}"
                 },
-                address1: "{{ __('common.address_required') }}",
-                post_code: "{{ __('common.post_code_required') }}",
-                city: "{{ __('common.city_required') }}",
-                state: "{{ __('common.state_required') }}",
-                country: "{{ __('common.country_required') }}",
+                address1: "{{ __('frontend.error_address_required') }}",
+                post_code: "{{ __('frontend.error_post_code_required') }}",
+                city: "{{ __('frontend.error_city_required') }}",
+                state: "{{ __('frontend.error_state_required') }}",
+                country: "{{ __('frontend.error_country_required') }}",
 
-                name:         { required: "{{ __('common.card_name_invalid') }}" },
-                card_number:  { required: "{{ __('common.card_number_invalid') }}" },
-                expiry_month: { required: "{{ __('common.card_month_invalid') }}" },
-                expiry_year:  { required: "{{ __('common.card_year_invalid') }}" },
-                cvv:          { required: "{{ __('common.card_cvc_invalid') }}" },
+                name:         { required: "{{ __('frontend.error_card_name_invalid') }}" },
+                card_number:  { required: "{{ __('frontend.error_card_number_invalid') }}" },
+                expiry_month: { required: "{{ __('frontend.error_card_month_invalid') }}" },
+                expiry_year:  { required: "{{ __('frontend.error_card_year_invalid') }}" },
+                cvv:          { required: "{{ __('frontend.error_card_cvc_invalid') }}" },
 
-                terms: "{{ __('common.accept_terms') }}",
-                privacy: "{{ __('common.accept_privacy') }}",
-                delivery: "{{ __('common.accept_delivery') }}",
-                refund: "{{ __('common.accept_refund') }}",
-                captcha: "{{ __('common.fill_it') }}"
+                terms: "{{ __('frontend.error_accept_terms') }}",
+                privacy: "{{ __('frontend.error_accept_privacy') }}",
+                delivery: "{{ __('frontend.error_accept_delivery') }}",
+                refund: "{{ __('frontend.error_accept_refund') }}",
+                captcha: "{{ __('frontend.error_captcha_required') }}"
             },
             // .ct-field is a block, so the message lands under the control — including
             // for the month/year pair and the checkbox rows, which are flex.

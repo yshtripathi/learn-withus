@@ -1,14 +1,14 @@
 @extends('frontend.layouts.master')
 
-@section('title','Order Status')
+@section('title', __('frontend.order_status_title'))
 
 @section('main-content')
 
 <x-breadcrumb
-    :title="__('common.order_status')"
+    :title="__('frontend.order_status')"
     :items="[
-        ['label' => __('common.home'), 'url' => route('home')],
-        ['label' => __('common.order_status')],
+        ['label' => __('frontend.home'), 'url' => route('home')],
+        ['label' => __('frontend.order_status')],
     ]" />
 
 <section class="os-section">
@@ -19,24 +19,24 @@
                 <i class="fa-solid fa-check"></i>
             </div>
 
-            <h2 class="os-title">{{ __('common.order_successful') }}</h2>
-            <p class="os-sub">{{ __('common.thank_you_order') }}</p>
+            <h2 class="os-title">{{ __('frontend.order_successful') }}</h2>
+            <p class="os-sub">{{ __('frontend.thank_you_order') }}</p>
 
             <div class="os-invoice">
                 <i class="fa-regular fa-file-lines"></i>
-                <span>{{ __('common.invoice_number') }}</span>
+                <span>{{ __('frontend.invoice_number') }}</span>
                 <b>{{ $transaction_id }}</b>
             </div>
 
             <div class="os-panel">
-                <h5><i class="fa-regular fa-envelope"></i> {{ __('common.order_confirmation') }} {{ $transaction_id }}</h5>
-                <p>{{ __('common.team_contact') }}</p>
+                <h5><i class="fa-regular fa-envelope"></i> {{ __('frontend.order_confirmation') }} {{ $transaction_id }}</h5>
+                <p>{{ __('frontend.team_contact') }}</p>
             </div>
 
             <div class="os-panel">
-                <h5>{{ __('common.need_assistance') }}</h5>
+                <h5>{{ __('frontend.need_assistance') }}</h5>
                 <p>
-                    {{ __('common.reach_out_for_help') }}
+                    {{ __('frontend.reach_out_for_help') }}
                     <a href="mailto:{{ env('APP_EMAIL') }}">{{ env('APP_EMAIL') }}</a>
                 </p>
             </div>
@@ -44,10 +44,10 @@
             <div class="os-actions">
                 <a href="{{ route('product-lists') }}" class="ct-submit">
                     <i class="fa-solid fa-palette"></i>
-                    <span>{{ __('common.continue_shopping') }}</span>
+                    <span>{{ __('frontend.continue_shopping') }}</span>
                 </a>
                 <a href="{{ route('home') }}" class="ct-submit os-btn-outline">
-                    <span>{{ __('common.home') }}</span>
+                    <span>{{ __('frontend.home') }}</span>
                 </a>
             </div>
         </div>

@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
-@section('title','About Us | Learn Withus')
-@section('meta_description', 'Learn Withus is a studio-led school for anime illustration, character design and digital painting. Meet the method and the mentors behind the courses.')
+@section('title', __('frontend.about_us_title'))
+@section('meta_description', __('frontend.about_us_meta_description'))
 
 @section('main-content')
 
@@ -184,10 +184,10 @@
 </style>
 
 <x-breadcrumb
-    title="About Us"
+    title="{{ __('frontend.about_us') }}"
     :items="[
-        ['label' => __('common.home'), 'url' => route('home')],
-        ['label' => 'About Us'],
+        ['label' => __('frontend.home'), 'url' => route('home')],
+        ['label' => __('frontend.about_us')],
     ]" />
 
 <!-- 1. Story -->
@@ -202,23 +202,16 @@
 
             <div class="col-lg-6">
                 <div data-aos="fade-left" data-aos-duration="1000">
-                    <span class="au-eyebrow">Our Story</span>
-                    <h2 class="au-title">We teach the craft behind <span>every character</span></h2>
+                    <span class="au-eyebrow">{{ __('frontend.our_story') }}</span>
+                    <h2 class="au-title">{!! __('frontend.our_story_title') !!}</h2>
 
-                    <p class="au-lead">
-                        Learn Withus began with a simple frustration: most drawing tutorials show you
-                        <em>what</em> was drawn, never <em>why</em>. So we built the school we wished we'd had —
-                        one that starts at anatomy and structure, and only then moves to style.
-                    </p>
-                    <p class="au-lead">
-                        Our mentors are working illustrators and character designers. Every course is built
-                        around real critique, real deadlines and a portfolio you can actually show.
-                    </p>
+                    <p class="au-lead">{!! __('frontend.our_story_p1') !!}</p>
+                    <p class="au-lead">{{ __('frontend.our_story_p2') }}</p>
 
                     <ul class="au-check">
-                        <li>Line-by-line critique from working illustrators, not auto-graded quizzes.</li>
-                        <li>Every brief and critique available in English and Japanese.</li>
-                        <li>Priced in USD, JPY and HKD — pay in the currency you actually hold.</li>
+                        <li>{{ __('frontend.our_story_bullet_1') }}</li>
+                        <li>{{ __('frontend.our_story_bullet_2') }}</li>
+                        <li>{{ __('frontend.our_story_bullet_3') }}</li>
                     </ul>
                 </div>
             </div>
@@ -230,18 +223,18 @@
 <section class="au-section au-levels">
     <div class="container">
         <div class="au-section-intro au-center" data-aos="fade-up" data-aos-duration="1000">
-            <span class="au-eyebrow">How It Works</span>
-            <h2 class="au-title">Four levels, <span>one path</span></h2>
-            <p class="au-lead">Every course ladders from Beginner to Expert, so you always know the next step.</p>
+            <span class="au-eyebrow">{{ __('frontend.how_it_works') }}</span>
+            <h2 class="au-title">{!! __('frontend.levels_title') !!}</h2>
+            <p class="au-lead">{{ __('frontend.levels_subtitle') }}</p>
         </div>
 
         <div class="row gy-4">
             @php
                 $steps = [
-                    ['n' => '01', 'title' => 'Beginner',     'text' => 'Build the foundation — construction, proportion and confident line work.'],
-                    ['n' => '02', 'title' => 'Intermediate', 'text' => 'Apply it under pressure. Structured practice, tracking and honest feedback.'],
-                    ['n' => '03', 'title' => 'Advanced',     'text' => 'Handle demanding briefs, adapt when the scene changes, refine your method.'],
-                    ['n' => '04', 'title' => 'Expert',       'text' => 'Direct your own work. Ship a portfolio that holds up in a studio review.'],
+                    ['n' => '01', 'title' => __('frontend.level_1_title'), 'text' => __('frontend.level_1_desc')],
+                    ['n' => '02', 'title' => __('frontend.level_2_title'), 'text' => __('frontend.level_2_desc')],
+                    ['n' => '03', 'title' => __('frontend.level_3_title'), 'text' => __('frontend.level_3_desc')],
+                    ['n' => '04', 'title' => __('frontend.level_4_title'), 'text' => __('frontend.level_4_desc')],
                 ];
             @endphp
 
@@ -262,14 +255,14 @@
 <section class="au-cta">
     <div class="container">
         <div data-aos="fade-up" data-aos-duration="1000">
-            <span class="au-eyebrow">Start Where You Are</span>
-            <h2 class="au-title">Pick a level. <span>Draw the first line.</span></h2>
-            <p>Twenty courses, four skill levels each. Whether you're holding a stylus for the first time or building a studio portfolio, there's a rung with your name on it.</p>
+            <span class="au-eyebrow">{{ __('frontend.cta_eyebrow') }}</span>
+            <h2 class="au-title">{!! __('frontend.cta_title') !!}</h2>
+            <p>{{ __('frontend.cta_desc') }}</p>
             <a href="{{ route('product-lists') }}" class="au-btn">
-                <i class="fas fa-palette"></i> Browse Courses
+                <i class="fas fa-palette"></i> {{ __('frontend.browse_courses') }}
             </a>
             <a href="{{ route('contact') }}" class="au-btn au-btn-ghost">
-                Talk to a Mentor
+                {{ __('frontend.talk_to_mentor') }}
             </a>
         </div>
     </div>

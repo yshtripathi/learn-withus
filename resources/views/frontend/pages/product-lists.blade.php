@@ -18,21 +18,21 @@
         : null;
 @endphp
 
-@section('title', $catTitle ?? __('common.shop'))
+@section('title', $catTitle ?? __('frontend.shop'))
 
 @section('main-content')
 
 <x-breadcrumb
-    :title="$catTitle ?? __('common.shop')"
+    :title="$catTitle ?? __('frontend.shop')"
     :items="$activeCategory
         ? [
-            ['label' => __('common.home'), 'url' => route('home')],
-            ['label' => __('common.shop'), 'url' => route('product-lists')],
+            ['label' => __('frontend.home'), 'url' => route('home')],
+            ['label' => __('frontend.shop'), 'url' => route('product-lists')],
             ['label' => $catTitle],
           ]
         : [
-            ['label' => __('common.home'), 'url' => route('home')],
-            ['label' => __('common.shop')],
+            ['label' => __('frontend.home'), 'url' => route('home')],
+            ['label' => __('frontend.shop')],
           ]" />
 
 <section class="sh-section">
@@ -53,7 +53,7 @@
                 @endif
 
                 <div class="sh-cat-body">
-                    <span class="sh-cat-eyebrow">{{ __('common.category') }}</span>
+                    <span class="sh-cat-eyebrow">{{ __('frontend.category') }}</span>
                     <h2 class="sh-cat-title">{{ $catTitle }}</h2>
                     @if($catSummary)
                         <p class="sh-cat-summary">{{ $catSummary }}</p>
@@ -65,7 +65,7 @@
         <div class="sh-toolbar">
             <p class="sh-count">
                 <b>{{ $total }}</b>
-                {{ $total === 1 ? __('common.course') : __('common.courses') }}
+                {{ $total === 1 ? __('frontend.course') : __('frontend.courses') }}
                 @if($activeCategory)
                     — {{ $catTitle }}
                 @endif
@@ -86,7 +86,7 @@
                         <article class="sh-card">
                             <div class="sh-thumb">
                                 <img src="{{ asset($photo[0]) }}" alt="{{ $product->title }}">
-                                <span class="sh-tag">{{ __('common.course') }}</span>
+                                <span class="sh-tag">{{ __('frontend.course') }}</span>
 
                                 @if($product->discount > 0)
                                     <span class="sh-off">-{{ (int) $product->discount }}%</span>
@@ -94,7 +94,7 @@
 
                                 <div class="sh-overlay">
                                     <a href="{{ route('product-detail', $product->slug) }}" class="sh-view">
-                                        <i class="fa-regular fa-eye"></i> {{ __('common.view_details') }}
+                                        <i class="fa-regular fa-eye"></i> {{ __('frontend.view_details') }}
                                     </a>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                 <div class="sh-foot">
                                     <span class="sh-price">
                                         @if($lowest)
-                                            <small class="sh-from">{{ __('common.from') }}</small>
+                                            <small class="sh-from">{{ __('frontend.from') }}</small>
                                             {{ $product->getCurrencySymbol() }}
                                             {{ Helper::getProductPriceByCurrency(session('currency'), $lowest) }}
                                         @else
@@ -130,7 +130,7 @@
                                         @endif
                                         <button type="submit" class="sh-add" {{ $product->stock <= 0 ? 'disabled' : '' }}>
                                             <i class="fa-solid fa-cart-shopping"></i>
-                                            {{ $product->stock <= 0 ? __('common.sold_out') : __('common.add_to_cart') }}
+                                            {{ $product->stock <= 0 ? __('frontend.sold_out') : __('frontend.add_to_cart') }}
                                         </button>
                                     </form>
                                 </div>
@@ -148,11 +148,11 @@
         @else
             <div class="sh-empty">
                 <i class="fa-regular fa-folder-open"></i>
-                <h4>{{ __('common.no_products_found') }}</h4>
-                <p>{{ __('common.try_another_category') }}</p>
+                <h4>{{ __('frontend.no_products_found') }}</h4>
+                <p>{{ __('frontend.try_another_category') }}</p>
                 <a href="{{ route('product-lists') }}" class="ct-submit">
                     <i class="fa-solid fa-palette"></i>
-                    <span>{{ __('common.browse_all_courses') }}</span>
+                    <span>{{ __('frontend.browse_all_courses') }}</span>
                 </a>
             </div>
         @endif

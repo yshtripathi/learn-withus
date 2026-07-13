@@ -1,12 +1,12 @@
 @extends('frontend.layouts.master')
-@section('title', __('common.sign_in_title'))
+@section('title', __('frontend.sign_in_title'))
 @section('main-content')
 
 <x-breadcrumb
-    :title="__('common.sign_in_title')"
+    :title="__('frontend.sign_in')"
     :items="[
-        ['label' => __('common.home'), 'url' => route('home')],
-        ['label' => __('common.sign_in_title')],
+        ['label' => __('frontend.home'), 'url' => route('home')],
+        ['label' => __('frontend.sign_in')],
     ]" />
 
 <section class="ct-section">
@@ -20,42 +20,42 @@
                 <div class="ct-alert ct-alert-success">{{ session('success') }}</div>
             @endif
 
-            <h2>{{ __('common.sign_into_account') }}</h2>
+            <h2>{{ __('frontend.sign_into_account') }}</h2>
 
             <form name="frmLogin" id="frmLogin" action="{{ route('login.submit') }}" method="post" novalidate>
                 @csrf
 
                 <div class="ct-field @error('email') is-invalid @enderror">
-                    <label class="ct-label" for="email">{{ __('common.email') }} <span>*</span></label>
+                    <label class="ct-label" for="email">{{ __('frontend.email') }} <span>*</span></label>
                     <div class="ct-control has-icon">
                         <input type="email" name="email" id="email" class="ct-input"
-                               value="{{ old('email') }}" placeholder="{{ __('common.enter_email') }}">
+                               value="{{ old('email') }}" placeholder="{{ __('frontend.placeholder_email') }}">
                         <i class="ct-icon fa-regular fa-envelope"></i>
                     </div>
                     @error('email')<span class="ct-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="ct-field @error('password') is-invalid @enderror">
-                    <label class="ct-label" for="password">{{ __('common.password') }} <span>*</span></label>
+                    <label class="ct-label" for="password">{{ __('frontend.password_label') }} <span>*</span></label>
                     <div class="ct-control has-icon">
                         <input type="password" name="password" id="password" class="ct-input"
-                               placeholder="{{ __('common.password') }}">
+                               placeholder="{{ __('frontend.placeholder_password') }}">
                         <i class="ct-icon fa-solid fa-lock"></i>
                     </div>
                     @error('password')<span class="ct-error">{{ $message }}</span>@enderror
                 </div>
 
-                <a class="ct-forgot" href="{{ route('forgetpwd.form') }}">{{ __('common.forget_password') }}</a>
+                <a class="ct-forgot" href="{{ route('forgetpwd.form') }}">{{ __('frontend.forget_password') }}</a>
 
                 <button type="submit" class="ct-submit ct-submit-full">
-                    <span>{{ __('common.login') }}</span>
+                    <span>{{ __('frontend.login_btn') }}</span>
                     <i class="fa-solid fa-arrow-right-to-bracket"></i>
                 </button>
             </form>
 
             <p class="ct-alt">
-                {{ __('common.dont_have_account') }}
-                <a href="{{ route('register.form') }}">{{ __('common.sign_up') }}</a>
+                {{ __('frontend.dont_have_account') }}
+                <a href="{{ route('register.form') }}">{{ __('frontend.sign_up') }}</a>
             </p>
         </div>
     </div>
@@ -75,10 +75,10 @@
                 password: { required: true, minlength: 5 }
             },
             messages: {
-                email: "{{ __('common.email_required') }}",
+                email: "{{ __('frontend.error_email_required') }}",
                 password: {
-                    required: "{{ __('common.password_required') }}",
-                    minlength: "{{ __('common.password_confirmation_min') }}"
+                    required: "{{ __('frontend.error_password_required') }}",
+                    minlength: "{{ __('frontend.error_password_min') }}"
                 }
             },
             // .ct-field is a block, so the message lands under the control.
