@@ -4,22 +4,12 @@
 
 <main>
     <!-- Page Header -->
-    <section class="page-header">
-        <div class="bg-item">
-            <div class="bg-img" data-background="{{ asset('assets/img/bg-img/page-header.webp') }}"></div>
-            <div class="overlay"></div>           
-        </div>
-        <div class="container">
-            <div class="page-header-content">
-                <h1 class="title">{{ __('common.cart') }}</h1>
-                <h4 class="sub-title">
-                    <a class="home" href="{{ route('home') }}">{{ __('common.home') }}</a>
-                    <span class="icon">/</span>
-                    <a class="inner-page" href="#">{{ __('common.cart') }}</a>
-                </h4>
-            </div>
-        </div>
-    </section>
+    <x-breadcrumb
+        :title="__('common.cart')"
+        :items="[
+            ['label' => __('common.home'), 'url' => route('home')],
+            ['label' => __('common.cart')],
+        ]" />
 
     <!-- Cart Section -->
     <section class="cart-section pt-130 pb-130">

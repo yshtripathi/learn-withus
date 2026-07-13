@@ -19,18 +19,13 @@
 @section('main-content')
 
 	<main>
-    <section class="page-header">
-            <div class="bg-item">
-                <div class="bg-img" data-background="{{ asset('assets/img/bg-img/page-header.webp') }}"></div>
-                <div class="overlay"></div>               
-            </div>
-            <div class="container">
-                <div class="page-header-content">
-                    <h1 class="title">{{ $product_detail->title }}</h1>
-                    <h4 class="sub-title"><a class="home" href="{{ route('home') }}">{{ __('common.home') }} </a><span class="icon">/</span><a class="inner-page" href="{{ route('product-lists') }}">{{ __('common.shop') }}</a><span class="icon">/</span><a class="inner-page">{{ $product_detail->title }}</a></h4>
-                </div>
-            </div>
-        </section>
+    <x-breadcrumb
+        :title="$product_detail->title"
+        :items="[
+            ['label' => __('common.home'), 'url' => route('home')],
+            ['label' => __('common.shop'), 'url' => route('product-lists')],
+            ['label' => $product_detail->title],
+        ]" />
         <!-- ./ page-header -->
 
         <section class="shop-section single pt-120 pb-120">

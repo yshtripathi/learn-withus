@@ -3,19 +3,12 @@
 @section('main-content')
 
 <main>
-<section class="page-header">
-        <div class="bg-item">
-            <div class="bg-img" data-background="{{ asset('assets/img/bg-img/page-header.webp') }}"></div>
-            <div class="overlay"></div>            
-        </div>
-        <div class="container">
-            <div class="page-header-content">
-                <h1 class="title">{{ __('common.sign_in_title') }}</h1>
-                <h4 class="sub-title"><a class="home" href="{{route('home')}}">{{ __('common.home') }} </a><span
-                        class="icon">/</span><a class="inner-page" href=""> {{ __('common.sign_in_title') }}</a></h4>
-            </div>
-        </div>
-    </section>
+<x-breadcrumb
+        :title="__('common.sign_in_title')"
+        :items="[
+            ['label' => __('common.home'), 'url' => route('home')],
+            ['label' => __('common.sign_in_title')],
+        ]" />
     <section class="course-frm">
         <div class="container">
             <div class="row align-items-center">

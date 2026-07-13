@@ -24800,3 +24800,168 @@ linear infinite;
 
 
 
+
+/* ==========================================================================
+   Breadcrumb component  (new theme)
+   Markup: resources/views/components/breadcrumb.blade.php  -> <x-breadcrumb />
+   ========================================================================== */
+.section-breadcrumb {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    min-height: 320px;
+    padding: 90px 0;
+    background-color: var(--ed-color-heading-primary);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Darkens the photo so the title and trail stay readable on any artwork. */
+.section-breadcrumb::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, rgba(0, 29, 51, 0.82) 0%, rgba(0, 29, 51, 0.55) 50%, rgba(0, 29, 51, 0.3) 100%);
+    pointer-events: none;
+}
+
+.section-breadcrumb > .container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.bb-breadcrumb-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.bb-breadcrumb-eyebrow {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    font-weight: var(--ed-fw-bold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ed-color-theme-secondary);
+}
+
+.bb-breadcrumb-title {
+    margin: 0;
+    font-size: 2.75rem;
+    font-weight: var(--ed-fw-ebold);
+    line-height: 1.2;
+    color: var(--ed-color-common-white);
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+}
+
+.bb-breadcrumb-title span {
+    background: linear-gradient(120deg, var(--ed-color-theme-secondary) 0%, color-mix(in srgb, var(--ed-color-theme-secondary) 60%, #ffffff) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bb-breadcrumb-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 11px 22px;
+    list-style: none;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.bb-breadcrumb-list li {
+    list-style: none;
+}
+
+.bb-breadcrumb-item {
+    font-size: 0.9rem;
+    font-weight: var(--ed-fw-sbold);
+    line-height: 1;
+}
+
+.bb-breadcrumb-item a {
+    position: relative;
+    color: rgba(255, 255, 255, 0.82);
+    text-decoration: none;
+    transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bb-breadcrumb-item a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 1.5px;
+    background: linear-gradient(120deg, var(--ed-color-theme-secondary) 0%, color-mix(in srgb, var(--ed-color-theme-secondary) 60%, #ffffff) 100%);
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bb-breadcrumb-item a:hover {
+    color: #ffffff;
+}
+
+.bb-breadcrumb-item a:hover::after {
+    width: 100%;
+}
+
+.bb-breadcrumb-item.active {
+    color: var(--ed-color-theme-secondary);
+}
+
+.bb-breadcrumb-sep {
+    display: flex;
+    align-items: center;
+    font-size: 0.7rem;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+@media (max-width: 991px) {
+    .section-breadcrumb {
+        min-height: 260px;
+        padding: 70px 0;
+    }
+    .bb-breadcrumb-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .section-breadcrumb {
+        min-height: 200px;
+        padding: 55px 0;
+    }
+    .bb-breadcrumb-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    .bb-breadcrumb-title {
+        font-size: 1.85rem;
+    }
+    .bb-breadcrumb-list {
+        padding: 9px 16px;
+    }
+    .bb-breadcrumb-item {
+        font-size: 0.82rem;
+    }
+}

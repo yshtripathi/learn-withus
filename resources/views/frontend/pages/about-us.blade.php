@@ -6,26 +6,14 @@
 
 
     <!-- Breadcrumb -->
-    <section class="section-breadcrumb margin-b-50">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row bb-breadcrumb-inner">
-                        <div class="col-md-6 col-sm-12">
-                            <h2 class="bb-breadcrumb-title">About Us</h2>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <ul class="bb-breadcrumb-list">
-                                <li class="bb-breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                                <li><i class="ri-arrow-right-double-fill"></i></li>
-                                <li class="bb-breadcrumb-item active">About Us</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <x-breadcrumb
+        eyebrow="Who We Are"
+        title="About"
+        highlight="Us"
+        :items="[
+            ['label' => __('common.home'), 'url' => route('home')],
+            ['label' => 'About Us'],
+        ]" />
 
     <!-- About -->
     <section class="section-about-redesigned">

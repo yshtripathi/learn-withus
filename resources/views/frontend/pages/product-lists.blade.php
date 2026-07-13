@@ -9,23 +9,21 @@
 @section('main-content')
 
 <main>
-        <section class="page-header">
-            <div class="bg-item">
-                <div class="bg-img" data-background="{{ asset('assets/img/bg-img/page-header.webp') }}"></div>
-                <div class="overlay"></div>                
-            </div>
-            <div class="container">
-                <div class="page-header-content">
-                    @if(isset($category) && $category && is_object($category) && property_exists($category, 'title'))
-                        <h1 class="title">{{ $category->title }}</h1>
-                        <h4 class="sub-title"><a class="home" href="{{ route('home') }}">{{ __('common.home') }}</a><span class="icon">/</span><a href="{{ route('product-lists') }}">{{ __('common.shop') }}</a><span class="icon">/</span><a class="inner-page">{{ $category->title }}</a></h4>
-                    @else
-                        <h1 class="title">{{ __('common.shop') }}</h1>
-                        <h4 class="sub-title"><a class="home" href="{{ route('home') }}">{{ __('common.home') }}</a><span class="icon">/</span><a class="inner-page"> {{ __('common.shop') }}</a></h4>
-                    @endif
-                </div>
-            </div>
-        </section>
+        @php
+            $hasCategory = isset($category) && $category && is_object($category) && property_exists($category, 'title');
+
+            $crumbs = [['label' => __('common.home'), 'url' => route('home')]];
+            if ($hasCategory) {
+                $crumbs[] = ['label' => __('common.shop'), 'url' => route('product-lists')];
+                $crumbs[] = ['label' => $category->title];
+            } else {
+                $crumbs[] = ['label' => __('common.shop')];
+            }
+        @endphp
+
+        <x-breadcrumb
+            :title="$hasCategory ? $category->title : __('common.shop')"
+            :items="$crumbs" />
         <!-- ./ page-header -->
 
         <section class="shop-section pt-120 pb-120">
