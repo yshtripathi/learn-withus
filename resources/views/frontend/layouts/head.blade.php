@@ -25,7 +25,7 @@
     <meta name="twitter:image" content="@yield('twitter_image', asset('assets/img/images/about-img-1.jpg'))">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/favicon.ico') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/favicon.png') }}">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">

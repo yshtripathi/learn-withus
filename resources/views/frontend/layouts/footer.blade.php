@@ -51,7 +51,7 @@
 }
 
 .ap-footer-logo img {
-    height: 48px !important;
+    height: 60px !important;
     width: auto !important;
   
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
@@ -389,7 +389,7 @@
                 <div class="ap-footer-widget">
                     <div class="ap-footer-logo">
                         <a href="{{route('home')}}">
-                            <img src="{{ asset('assets/img/logo/logo-1.png') }}" alt="LearnWithUs">
+                            <img src="{{ asset('assets/img/logo/logo-1.webp') }}" alt="LearnWithUs">
                         </a>
                     </div>
                     

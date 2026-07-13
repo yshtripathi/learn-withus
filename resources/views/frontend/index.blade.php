@@ -249,5 +249,33 @@
             sync();
         });
     });
+
+    // --- Interactive 3D Tilt Effect ---
+    document.querySelectorAll('.st-card, .nf-card, .hm-collage figure, .hm-feature').forEach(function(el) {
+        el.addEventListener('mousemove', function(e) {
+            var rect = el.getBoundingClientRect();
+            var xPct = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+            var yPct = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+            el.style.transform = `perspective(1000px) rotateX(${-yPct * 6}deg) rotateY(${xPct * 6}deg) translateY(-4px) scale3d(1.02, 1.02, 1.02)`;
+            el.style.transition = 'transform 0.1s ease-out';
+            el.style.zIndex = "10";
+        });
+        
+        el.addEventListener('mouseleave', function() {
+            el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale3d(1, 1, 1)';
+            el.style.transition = 'transform 0.5s ease-out';
+            el.style.zIndex = "1";
+        });
+    });
+
+    // --- Hero Background Parallax Effect ---
+    document.addEventListener('mousemove', function(e) {
+        var hero = document.querySelector('.hm-hero');
+        if (hero) {
+            var x = (e.clientX / window.innerWidth - 0.5) * 40; 
+            var y = (e.clientY / window.innerHeight - 0.5) * 40;
+            hero.style.backgroundPosition = `calc(50% - ${x}px) calc(50% - ${y}px)`;
+        }
+    });
 </script>
 @endpush

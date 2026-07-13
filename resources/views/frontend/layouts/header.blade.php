@@ -40,7 +40,7 @@
 
     .hd-logo img {
         display: block;
-        height: 50px;
+        height: 65px;
         width: auto;
         transition: transform 0.3s ease;
     }
@@ -514,7 +514,7 @@
         <div class="hd-inner">
 
             <a href="{{ route('home') }}" class="hd-logo">
-                <img src="{{ asset('assets/img/logo/logo-1.png') }}" alt="LearnWithUs">
+                <img src="{{ asset('assets/img/logo/logo-1.webp') }}" alt="LearnWithUs">
             </a>
 
             <ul class="hd-nav">
@@ -689,7 +689,7 @@
 <!-- Mobile menu -->
 <nav class="hd-mobile" id="hd-mobile">
     <div class="hd-mobile-head">
-        <img src="{{ asset('assets/img/logo/logo-1.png') }}" alt="LearnWithUs">
+        <img src="{{ asset('assets/img/logo/logo-1.webp') }}" alt="LearnWithUs">
         <button type="button" class="hd-drawer-close" id="hd-menu-close" aria-label="{{ __('frontend.close_menu') }}">
             <i class="fa-solid fa-xmark"></i>
         </button>
