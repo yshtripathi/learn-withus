@@ -1,256 +1,247 @@
 @extends('frontend.layouts.master')
-@section('title','Order Detail')
+@section('title','My Account')
 @section('main-content')
-        <x-breadcrumb
-            :title="__('common.order_detail')"
-            :items="[
-                ['label' => __('common.home'), 'url' => route('home')],
-                ['label' => __('common.order_detail')],
-            ]" />
 
+<x-breadcrumb
+    :title="__('common.my_account')"
+    :items="[
+        ['label' => __('common.home'), 'url' => route('home')],
+        ['label' => __('common.my_account')],
+    ]" />
 
-<section class="appointment-section pt-5 pb-5">
+@php
+    $user = auth()->user();
+
+    // A failed password change redirects back here, so open that panel rather than
+    // dropping the user on Orders with their errors hidden out of sight.
+    $passwordFields = ['current_password', 'new_password', 'new_confirm_password'];
+    $activeTab = $errors->hasAny($passwordFields) ? 'password' : 'orders';
+
+    $initial = strtoupper(mb_substr($user->name ?? $user->email, 0, 1));
+@endphp
+
+<section class="or-section">
     <div class="container">
-        <div class="appointment-wrap border shadow p-5">
-            <div class="shape">
-                <img src="{{ asset('assets/img/new-update-2/shapes/appoint-shape.png') }}" alt="shape">
+
+        @include('user.layouts.notification')
+
+        <div class="row gy-4">
+
+            <!-- Sidebar -->
+            <div class="col-lg-4 col-xl-3">
+                <aside class="ac-sidebar" data-aos="fade-right" data-aos-duration="800">
+                    <div class="ac-user">
+                        <span class="ac-avatar">{{ $initial }}</span>
+                        <div class="ac-user-info">
+                            <b>{{ $user->name }}</b>
+                            <span>{{ $user->email }}</span>
+                        </div>
+                    </div>
+
+                    <nav class="ac-nav">
+                        <button type="button"
+                                class="ac-nav-item {{ $activeTab === 'orders' ? 'is-active' : '' }}"
+                                data-tab="orders">
+                            <i class="fa-regular fa-file-lines"></i>
+                            {{ __('common.order_detail') }}
+                            <span class="ac-count">{{ $orders->total() }}</span>
+                        </button>
+
+                        <button type="button"
+                                class="ac-nav-item {{ $activeTab === 'password' ? 'is-active' : '' }}"
+                                data-tab="password">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            {{ __('common.change_password') }}
+                        </button>
+                    </nav>
+                </aside>
             </div>
-            <div class="appointment-top">
-                <div class="section-heading mb-3">
-      <div class="row">
-        <div class="col-12">
-          <div class="table-content table-responsive">
 
-              @include('user.layouts.notification')
+            <!-- Content -->
+            <div class="col-lg-8 col-xl-9">
 
-              <div class="row">
-                @php
-                    $orders = DB::table('orders')->where('user_id', auth()->user()->id)->orderBy('id', 'desc')->paginate(100);
-                @endphp
-                <!-- Order -->
-                <div class="col-xl-12 col-lg-12">
-                  <table class="table table-bordered" id="order-dataTable" width="100%" cellspacing="0">
-                    <thead>
-                      <tr>
-                        <th>{{ __('common.order_number') }}</th>
-                        <th>{{ __('common.name') }}</th>
-                        <th>{{ __('common.email') }}</th>
-                        <th>{{ __('common.quantity') }}</th>
-                        <th class="text-right">{{ __('common.total_amount') }}</th>
-                        <th>{{ __('common.status') }}</th>
-                        <th>{{ __('common.action') }}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @if(count($orders)>0)
+                <!-- Orders -->
+                <div class="ac-panel {{ $activeTab === 'orders' ? 'is-active' : '' }}" data-panel="orders">
+                    @if(count($orders))
+                        <div class="or-head">
+                            <h2>{{ __('common.order_detail') }}</h2>
+                        </div>
+
                         @foreach($orders as $order)
-                          @php
-                            $currency = match($order->currency) {
-                                'USD' => '$',
-                                'JPY' => '¥',
-                                'HKD' => 'HK$',
-                                default => '$',
-                            };
+                            @php
+                                $symbol = Helper::getCurrencySymbol($order->currency);
+                                $decimals = $order->currency == 'JPY' ? 0 : 2;
 
-                            if($order->currency == "USD") {
-                                $orderTotalAmount = number_format($order->total_amount, 2);
-                            }
-                            else {
-                                $orderTotalAmount = number_format($order->total_amount_jp, 2);
-                            }
-                          @endphp
-                          <tr>
-                              <td>{{$order->order_number}}</td>
-                              <td>{{$order->first_name}} {{$order->last_name}}</td>
-                              <td>{{$order->email}}</td>
-                              <td>{{$order->quantity}}</td>
-                              <td class="text-right ft-w-b">{{ $currency }}
-                                {{number_format($order->total_amount, $order->currency=='JPY' ? 0 : 2)}}
-                              </td>
-                              <td>
-                                {{ ucwords($order->status) }}
-                              </td>
-                              <td>
-                                  <a href="{{route('user.order.show',$order->id)}}" class="btn btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%;padding:5px" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
-                                  <!-- <form method="POST" action="{{route('user.order.delete',[$order->id])}}">
-                                    @csrf 
-                                    @method('delete')
-                                        <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                                  </form> -->
-                              </td>
-                          </tr>  
+                                $status = strtolower($order->status);
+                                $statusClass = match($status) {
+                                    'delivered' => 'or-status-delivered',
+                                    'process'   => 'or-status-process',
+                                    'cancel'    => 'or-status-cancel',
+                                    default     => 'or-status-new',
+                                };
+                            @endphp
+
+                            <article class="or-card">
+                                <div class="or-num">
+                                    <small>{{ __('common.order_number') }}</small>
+                                    <b>{{ $order->order_number }}</b>
+                                </div>
+
+                                <div class="or-cell">
+                                    <small>{{ __('common.order_date') }}</small>
+                                    <span>{{ $order->created_at ? $order->created_at->format('d M, Y') : '—' }}</span>
+                                </div>
+
+                                <div class="or-cell">
+                                    <small>{{ __('common.total_amount') }}</small>
+                                    <span class="or-amount">
+                                        {{ $symbol }}{{ number_format($order->total_amount, $decimals) }}
+                                    </span>
+                                </div>
+
+                                <div class="or-cell">
+                                    <small>{{ __('common.status') }}</small>
+                                    <span class="or-status {{ $statusClass }}">{{ ucwords($order->status) }}</span>
+                                </div>
+
+                                <a href="{{ route('user.order.show', $order->id) }}" class="or-view">
+                                    <i class="fa-regular fa-eye"></i>
+                                    {{ __('common.view_details') }}
+                                </a>
+                            </article>
                         @endforeach
-                        @else
-                          <td colspan="8" class="text-center"><h4 class="my-4">{{ __('common.no_orders_found') }}</h4></td>
+
+                        @if($orders->hasPages())
+                            <div class="sh-pagination">
+                                {{ $orders->onEachSide(1)->links() }}
+                            </div>
                         @endif
-                    </tbody>
-                  </table>
-
-                  {{$orders->links()}}
+                    @else
+                        <div class="or-empty">
+                            <i class="fa-regular fa-file-lines"></i>
+                            <h4>{{ __('common.no_orders_found') }}</h4>
+                            <p>{{ __('common.try_another_category') }}</p>
+                            <a href="{{ route('product-lists') }}" class="ct-submit">
+                                <i class="fa-solid fa-palette"></i>
+                                <span>{{ __('common.browse_all_courses') }}</span>
+                            </a>
+                        </div>
+                    @endif
                 </div>
-              </div>
 
-          </div>
+                <!-- Change password -->
+                <div class="ac-panel {{ $activeTab === 'password' ? 'is-active' : '' }}" data-panel="password">
+                    <div class="ct-card">
+                        <h2>{{ __('common.change_password') }}</h2>
+                        <p>{{ __('common.password_min') }}</p>
+
+                        <form action="{{ route('change.password') }}" method="POST" id="frmChangePassword" novalidate>
+                            @csrf
+
+                            <div class="ct-field @error('current_password') is-invalid @enderror">
+                                <label class="ct-label" for="current_password">{{ __('common.current_password') }} <span>*</span></label>
+                                <div class="ct-control has-icon">
+                                    <input type="password" name="current_password" id="current_password" class="ct-input">
+                                    <i class="ct-icon fa-solid fa-lock"></i>
+                                </div>
+                                @error('current_password')<span class="ct-error">{{ $message }}</span>@enderror
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="ct-field @error('new_password') is-invalid @enderror">
+                                        <label class="ct-label" for="new_password">{{ __('common.new_password') }} <span>*</span></label>
+                                        <div class="ct-control has-icon">
+                                            <input type="password" name="new_password" id="new_password" class="ct-input">
+                                            <i class="ct-icon fa-solid fa-key"></i>
+                                        </div>
+                                        @error('new_password')<span class="ct-error">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="ct-field @error('new_confirm_password') is-invalid @enderror">
+                                        <label class="ct-label" for="new_confirm_password">{{ __('common.confirm_password') }} <span>*</span></label>
+                                        <div class="ct-control has-icon">
+                                            <input type="password" name="new_confirm_password" id="new_confirm_password" class="ct-input">
+                                            <i class="ct-icon fa-solid fa-key"></i>
+                                        </div>
+                                        @error('new_confirm_password')<span class="ct-error">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="ct-submit">
+                                <i class="fa-solid fa-shield-halved"></i>
+                                <span>{{ __('common.change_password') }}</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
         </div>
-      </div>
+
     </div>
-              </div>
-
-          </div>
-        </div>
-      </div>
+</section>
 
 @endsection
 
 @push('scripts')
-<script type="text/javascript">
-  const url = "{{route('product.order.income')}}";
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+<script>
+    $(document).ready(function () {
 
-// Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
-
-function number_format(number, decimals, dec_point, thousands_sep) {
-  // *     example: number_format(1234.56, 2, ',', ' ');
-  // *     return: '1 234,56'
-  number = (number + '').replace(',', '').replace(' ', '');
-  var n = !isFinite(+number) ? 0 : +number,
-    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-    sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-    dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-    s = '',
-    toFixedFix = function(n, prec) {
-      var k = Math.pow(10, prec);
-      return '' + Math.round(n * k) / k;
-    };
-  // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-  if (s[0].length > 3) {
-    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-  }
-  if ((s[1] || '').length < prec) {
-    s[1] = s[1] || '';
-    s[1] += new Array(prec - s[1].length + 1).join('0');
-  }
-  return s.join(dec);
-}
-
-// Area Chart Example
-var ctx = document.getElementById("myAreaChart");
-
-axios.get(url)
-            .then(function (response) {
-              const data_keys = Object.keys(response.data);
-              const data_values = Object.values(response.data);
-
-
-var myLineChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: data_keys, //["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [{
-      label: "Earnings",
-      lineTension: 0.3,
-      backgroundColor: "rgba(78, 115, 223, 0.05)",
-      borderColor: "rgba(78, 115, 223, 1)",
-      pointRadius: 3,
-      pointBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointBorderColor: "rgba(78, 115, 223, 1)",
-      pointHoverRadius: 3,
-      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-      pointHitRadius: 10,
-      pointBorderWidth: 2,
-      data: data_values, //[0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 44660],
-    }],
-  },
-  options: {
-    maintainAspectRatio: false,
-    layout: {
-      padding: {
-        left: 10,
-        right: 25,
-        top: 25,
-        bottom: 0
-      }
-    },
-    scales: {
-      xAxes: [{
-        time: {
-          unit: 'date'
-        },
-        gridLines: {
-          display: false,
-          drawBorder: false
-        },
-        ticks: {
-          maxTicksLimit: 7
+        // Sidebar tabs
+        function showTab(tab) {
+            $('.ac-nav-item').removeClass('is-active')
+                .filter('[data-tab="' + tab + '"]').addClass('is-active');
+            $('.ac-panel').removeClass('is-active')
+                .filter('[data-panel="' + tab + '"]').addClass('is-active');
         }
-      }],
-      yAxes: [{
-        ticks: {
-          maxTicksLimit: 5,
-          padding: 10,
-          // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
-            return '$' + number_format(value);
-          }
-        },
-        gridLines: {
-          color: "rgb(234, 236, 244)",
-          zeroLineColor: "rgb(234, 236, 244)",
-          drawBorder: false,
-          borderDash: [2],
-          zeroLineBorderDash: [2]
+
+        $('.ac-nav-item').on('click', function () {
+            var tab = $(this).data('tab');
+            showTab(tab);
+            history.replaceState(null, '', '#' + tab);
+        });
+
+        // Deep link (#password) — but never override a panel opened by validation errors.
+        var hash = (window.location.hash || '').replace('#', '');
+        if (hash && $('.ac-panel[data-panel="' + hash + '"]').length && !$('.ct-error:not(:empty)').length) {
+            showTab(hash);
         }
-      }],
-    },
-    legend: {
-      display: false
-    },
-    tooltips: {
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      titleMarginBottom: 10,
-      titleFontColor: '#6e707e',
-      titleFontSize: 14,
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      intersect: false,
-      mode: 'index',
-      caretPadding: 10,
-      callbacks: {
-        label: function(tooltipItem, chart) {
-          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
-        }
-      }
-    }
-  }
-});
 
-
-
-
-
-
-
-
-
-
-
-            })
-            .catch(function (error) {
-            //   vm.answer = 'Error! Could not reach the API. ' + error
-            console.log(error)
-            });
-
-
-
-
-
-  </script>
+        $("#frmChangePassword").validate({
+            errorClass: 'ct-error',
+            errorElement: 'span',
+            rules: {
+                current_password: "required",
+                new_password: { required: true, minlength: 6 },
+                new_confirm_password: { required: true, equalTo: "#new_password" }
+            },
+            messages: {
+                current_password: "{{ __('common.password_required') }}",
+                new_password: {
+                    required: "{{ __('common.password_required') }}",
+                    minlength: "{{ __('common.password_min') }}"
+                },
+                new_confirm_password: {
+                    required: "{{ __('common.password_required') }}",
+                    equalTo: "{{ __('common.password_not_match') }}"
+                }
+            },
+            // .ct-field is a block, so the message lands under the input.
+            errorPlacement: function (error, element) {
+                error.appendTo(element.closest('.ct-field'));
+            },
+            highlight: function (element) {
+                $(element).closest('.ct-field').addClass('is-invalid');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.ct-field').removeClass('is-invalid');
+            }
+        });
+    });
+</script>
 @endpush

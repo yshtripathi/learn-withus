@@ -31,7 +31,11 @@ class HomeController extends Controller
 
     public function index() {
         if(auth()->user()->role == "user") {
-            return view('user.index-front');
+            $orders = Order::where('user_id', auth()->user()->id)
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+
+            return view('user.index-front')->with('orders', $orders);
         }
         else {
             return view('user.index');
@@ -89,8 +93,12 @@ class HomeController extends Controller
 
     public function orderShow($id)
     {
-        $order = Order::find($id);
-        // return $order;
+        // Scope to the signed-in user — Order::find() alone let anyone read another
+        // customer's order (and their name, email and address) by changing the id.
+        $order = Order::with(['cart_info.product', 'cart_info.level'])
+            ->where('user_id', auth()->user()->id)
+            ->findOrFail($id);
+
         return view('user.order.show')->with('order',$order);
     }
     // Product Review
