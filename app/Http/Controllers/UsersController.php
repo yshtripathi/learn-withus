@@ -52,7 +52,7 @@ class UsersController extends Controller
         $status=User::create($data);
         // dd($status);
         if($status){
-            request()->session()->flash('success',__('common.user_successfully_added'));
+            request()->session()->flash('success',__('frontend.user_successfully_added'));
         }
         else{
             request()->session()->flash('error','Error occurred while adding user');
@@ -108,7 +108,7 @@ class UsersController extends Controller
         
         $status=$user->fill($data)->save();
         if($status){
-            request()->session()->flash('success',__('common.user_successfully_updated'));
+            request()->session()->flash('success',__('frontend.user_successfully_updated'));
         }
         else{
             request()->session()->flash('error','Error occured while updating');
@@ -128,7 +128,7 @@ class UsersController extends Controller
         $delete=User::findorFail($id);
         $status=$delete->delete();
         if($status){
-            request()->session()->flash('success',__('common.user_successfully_deleted'));
+            request()->session()->flash('success',__('frontend.user_successfully_deleted'));
         }
         else{
             request()->session()->flash('error','There is an error while deleting users');

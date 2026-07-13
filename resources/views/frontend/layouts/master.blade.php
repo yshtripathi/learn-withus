@@ -10,9 +10,9 @@
 	@yield('main-content')
 	</main>
 	@include('frontend.layouts.footer')
+    @stack('scripts')
 </body>
-</html> 
-@stack('scripts')
+</html>
 
 
     

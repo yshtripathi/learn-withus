@@ -72,13 +72,13 @@ class PaypalController extends Controller
         // return $response;
   
         if (in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
-            request()->session()->flash('success',__('common.paypal_payment_success'));
+            request()->session()->flash('success',__('frontend.paypal_payment_success'));
             session()->forget('cart');
             session()->forget('coupon');
             return redirect()->route('home');
         }
 
-        request()->session()->flash('error',__('common.something_went_wrong_retry'));
+        request()->session()->flash('error',__('frontend.something_went_wrong_retry'));
         return redirect()->back();
     }
 }

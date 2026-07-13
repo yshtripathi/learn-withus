@@ -15,20 +15,20 @@ class WishlistController extends Controller
     public function wishlist(Request $request){
         // dd($request->all());
         if (empty($request->slug)) {
-            request()->session()->flash('error',__('common.invalid_products_wishlist'));
+            request()->session()->flash('error',__('frontend.invalid_products_wishlist'));
             return back();
         }
         $product = Product::where('slug', $request->slug)->first();
         // return $product;
         if (empty($product)) {
-            request()->session()->flash('error',__('common.invalid_products_wishlist'));
+            request()->session()->flash('error',__('frontend.invalid_products_wishlist'));
             return back();
         }
 
         $already_wishlist = Wishlist::where('user_id', auth()->user()->id)->where('cart_id',null)->where('product_id', $product->id)->first();
         // return $already_wishlist;
         if($already_wishlist) {
-            request()->session()->flash('error',__('common.already_in_wishlist'));
+            request()->session()->flash('error',__('frontend.already_in_wishlist'));
             return back();
         }else{
 
@@ -38,10 +38,10 @@ class WishlistController extends Controller
             $wishlist->price = ($product->price-($product->price*$product->discount)/100);
             $wishlist->quantity = 1;
             $wishlist->amount=$wishlist->price*$wishlist->quantity;
-            if ($wishlist->product->stock < $wishlist->quantity || $wishlist->product->stock <= 0) return back()->with('error',__('common.stock_not_sufficient'));
+            if ($wishlist->product->stock < $wishlist->quantity || $wishlist->product->stock <= 0) return back()->with('error',__('frontend.stock_not_sufficient'));
             $wishlist->save();
         }
-        request()->session()->flash('success',__('common.product_added_to_wishlist'));
+        request()->session()->flash('success',__('frontend.product_added_to_wishlist'));
         return back();
     }  
     
@@ -49,10 +49,10 @@ class WishlistController extends Controller
         $wishlist = Wishlist::find($request->id);
         if ($wishlist) {
             $wishlist->delete();
-            request()->session()->flash('success',__('common.wishlist_removed_success'));
+            request()->session()->flash('success',__('frontend.wishlist_removed_success'));
             return back();
         }
-        request()->session()->flash('error',__('common.error_please_try_again'));
+        request()->session()->flash('error',__('frontend.error_please_try_again'));
         return back();
     }     
 }

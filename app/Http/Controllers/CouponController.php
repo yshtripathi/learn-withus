@@ -45,10 +45,10 @@ class CouponController extends Controller
         $data=$request->all();
         $status=Coupon::create($data);
         if($status){
-            request()->session()->flash('success',__('common.coupon_successfully_added'));
+            request()->session()->flash('success',__('frontend.coupon_successfully_added'));
         }
         else{
-            request()->session()->flash('error',__('common.please_try_again'));
+            request()->session()->flash('error',__('frontend.please_try_again'));
         }
         return redirect()->route('coupon.index');
     }
@@ -76,7 +76,7 @@ class CouponController extends Controller
             return view('backend.coupon.edit')->with('coupon',$coupon);
         }
         else{
-            return view('backend.coupon.index')->with('error',__('common.coupon_not_found'));
+            return view('backend.coupon.index')->with('error',__('frontend.coupon_not_found'));
         }
     }
 
@@ -100,10 +100,10 @@ class CouponController extends Controller
         
         $status=$coupon->fill($data)->save();
         if($status){
-            request()->session()->flash('success',__('common.coupon_successfully_updated'));
+            request()->session()->flash('success',__('frontend.coupon_successfully_updated'));
         }
         else{
-            request()->session()->flash('error',__('common.please_try_again'));
+            request()->session()->flash('error',__('frontend.please_try_again'));
         }
         return redirect()->route('coupon.index');
         
@@ -121,15 +121,15 @@ class CouponController extends Controller
         if($coupon){
             $status=$coupon->delete();
             if($status){
-                request()->session()->flash('success',__('common.coupon_successfully_deleted'));
+                request()->session()->flash('success',__('frontend.coupon_successfully_deleted'));
             }
             else{
-                request()->session()->flash('error',__('common.error_occurred'));
+                request()->session()->flash('error',__('frontend.error_occurred'));
             }
             return redirect()->route('coupon.index');
         }
         else{
-            request()->session()->flash('error',__('common.coupon_not_found'));
+            request()->session()->flash('error',__('frontend.coupon_not_found'));
             return redirect()->back();
         }
     }
@@ -139,7 +139,7 @@ class CouponController extends Controller
         $coupon=Coupon::where('code',$request->code)->first();
         // dd($coupon);
         if(!$coupon){
-            request()->session()->flash('error',__('common.invalid_coupon_code'));
+            request()->session()->flash('error',__('frontend.invalid_coupon_code'));
             return back();
         }
         if($coupon){
@@ -150,7 +150,7 @@ class CouponController extends Controller
                 'code'=>$coupon->code,
                 'value'=>$coupon->discount($total_price)
             ]);
-            request()->session()->flash('success',__('common.coupon_successfully_applied'));
+            request()->session()->flash('success',__('frontend.coupon_successfully_applied'));
             return redirect()->back();
         }
     }

@@ -49,7 +49,7 @@ class PostTagController extends Controller
         $data['slug']=$slug;
         $status=PostTag::create($data);
         if($status){
-            request()->session()->flash('success',__('common.post_tag_successfully_added'));
+            request()->session()->flash('success',__('frontend.post_tag_successfully_added'));
         }
         else{
             request()->session()->flash('error','Please try again!!');
@@ -98,7 +98,7 @@ class PostTagController extends Controller
         $data=$request->all();
         $status=$postTag->fill($data)->save();
         if($status){
-            request()->session()->flash('success',__('common.post_tag_successfully_updated'));
+            request()->session()->flash('success',__('frontend.post_tag_successfully_updated'));
         }
         else{
             request()->session()->flash('error','Please try again!!');
@@ -119,7 +119,7 @@ class PostTagController extends Controller
         $status=$postTag->delete();
         
         if($status){
-            request()->session()->flash('success',__('common.post_tag_successfully_deleted'));
+            request()->session()->flash('success',__('frontend.post_tag_successfully_deleted'));
         }
         else{
             request()->session()->flash('error','Error while deleting post tag');

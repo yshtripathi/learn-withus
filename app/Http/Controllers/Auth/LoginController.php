@@ -58,7 +58,7 @@ class LoginController extends Controller
         // dd($users);
         if($users){
             Auth::login($users);
-            return redirect('/')->with('success',__('common.login_from_provider').$provider);
+            return redirect('/')->with('success',__('frontend.login_from_provider').$provider);
         }else{
             $user = User::create([
                 'name'          => $userSocial->getName(),

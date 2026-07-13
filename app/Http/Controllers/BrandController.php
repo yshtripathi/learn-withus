@@ -81,7 +81,7 @@ class BrandController extends Controller
         $brand = Brand::find($id);
 
         if (!$brand) {
-            return redirect()->back()->with('error', __('common.brand_not_found'));
+            return redirect()->back()->with('error', __('frontend.brand_not_found'));
         }
 
         return view('backend.brand.edit', compact('brand'));
@@ -101,7 +101,7 @@ class BrandController extends Controller
         $brand = Brand::find($id);
 
         if (!$brand) {
-            return redirect()->back()->with('error', __('common.brand_not_found'));
+            return redirect()->back()->with('error', __('frontend.brand_not_found'));
         }
 
         $validatedData = $request->validate([
@@ -132,7 +132,7 @@ class BrandController extends Controller
         $brand = Brand::find($id);
 
         if (!$brand) {
-            return redirect()->back()->with('error', __('common.brand_not_found'));
+            return redirect()->back()->with('error', __('frontend.brand_not_found'));
         }
 
         $status = $brand->delete();

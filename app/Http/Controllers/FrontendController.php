@@ -557,16 +557,16 @@ class FrontendController extends Controller
             {                  
                    Cart::where('user_id', $guest)->update(['user_id' =>  auth()->user()->id]);
                    session()->forget('guest');
-                   request()->session()->flash('success',__('common.successfully_login'));
+                   request()->session()->flash('success',__('frontend.successfully_login'));
             return redirect()->route('checkout');
             }
             }
-            request()->session()->flash('success',__('common.successfully_login'));
+            request()->session()->flash('success',__('frontend.successfully_login'));
             return redirect()->route('home');
 
         }
         else{
-            request()->session()->flash('error',__('common.invalid_email_password'));
+            request()->session()->flash('error',__('frontend.invalid_email_password'));
             return redirect()->back();
         }
     }
@@ -574,7 +574,7 @@ class FrontendController extends Controller
     public function logout(){
         Session::forget('user');
         Auth::logout();
-        request()->session()->flash('success',__('common.logout_successfully'));
+        request()->session()->flash('success',__('frontend.logout_successfully'));
         return redirect()->route('home');
     }
 
@@ -591,7 +591,7 @@ class FrontendController extends Controller
         ]);
         $usercount = User::where('created_at', '>=', Carbon::now()->subHours(24))->count();
         if($usercount>=2) {
-           request()->session()->flash('error',__('common.please_try_again_later'));
+           request()->session()->flash('error',__('frontend.please_try_again_later'));
             return back();
         }
        $data=$request->all();
@@ -601,12 +601,12 @@ class FrontendController extends Controller
         Session::put('user',$data['email']);
         if($check){
          Mail::to($data['email'])->send(new RegisterMail($data));
-            request()->session()->flash('success',__('common.successfully_registered'));
+            request()->session()->flash('success',__('frontend.successfully_registered'));
             // return redirect()->route('home');
             return redirect()->route('login.form');
         }
         else{
-            request()->session()->flash('error',__('common.please_try_again'));
+            request()->session()->flash('error',__('frontend.please_try_again'));
             return back();
         }
     }
@@ -627,16 +627,16 @@ class FrontendController extends Controller
         if(! Newsletter::isSubscribed($request->email)){
                 Newsletter::subscribePending($request->email);
                 if(Newsletter::lastActionSucceeded()){
-                    request()->session()->flash('success',__('common.subscribed_check_email'));
+                    request()->session()->flash('success',__('frontend.subscribed_check_email'));
                     return redirect()->route('home');
                 }
                 else{
                     Newsletter::getLastError();
-                    return back()->with('error',__('common.something_went_wrong'));
+                    return back()->with('error',__('frontend.something_went_wrong'));
                 }
             }
             else{
-                request()->session()->flash('error',__('common.already_subscribed'));
+                request()->session()->flash('error',__('frontend.already_subscribed'));
                 return back();
             }
     }

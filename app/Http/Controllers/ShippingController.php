@@ -46,7 +46,7 @@ class ShippingController extends Controller
         // return $data;
         $status=Shipping::create($data);
         if($status){
-            request()->session()->flash('success',__('common.shipping_successfully_created'));
+            request()->session()->flash('success',__('frontend.shipping_successfully_created'));
         }
         else{
             request()->session()->flash('error','Error, Please try again');
@@ -99,7 +99,7 @@ class ShippingController extends Controller
         // return $data;
         $status=$shipping->fill($data)->save();
         if($status){
-            request()->session()->flash('success',__('common.shipping_successfully_updated'));
+            request()->session()->flash('success',__('frontend.shipping_successfully_updated'));
         }
         else{
             request()->session()->flash('error','Error, Please try again');
@@ -119,7 +119,7 @@ class ShippingController extends Controller
         if($shipping){
             $status=$shipping->delete();
             if($status){
-                request()->session()->flash('success',__('common.shipping_successfully_deleted'));
+                request()->session()->flash('success',__('frontend.shipping_successfully_deleted'));
             }
             else{
                 request()->session()->flash('error','Error, Please try again');

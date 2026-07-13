@@ -50,7 +50,7 @@ class PostCategoryController extends Controller
         $data['slug']=$slug;
         $status=PostCategory::create($data);
         if($status){
-            request()->session()->flash('success',__('common.post_category_successfully_added'));
+            request()->session()->flash('success',__('frontend.post_category_successfully_added'));
         }
         else{
             request()->session()->flash('error','Please try again!!');
@@ -99,7 +99,7 @@ class PostCategoryController extends Controller
         $data=$request->all();
         $status=$postCategory->fill($data)->save();
         if($status){
-            request()->session()->flash('success',__('common.post_category_successfully_updated'));
+            request()->session()->flash('success',__('frontend.post_category_successfully_updated'));
         }
         else{
             request()->session()->flash('error','Please try again!!');
@@ -120,7 +120,7 @@ class PostCategoryController extends Controller
         $status=$postCategory->delete();
         
         if($status){
-            request()->session()->flash('success',__('common.post_category_successfully_deleted'));
+            request()->session()->flash('success',__('frontend.post_category_successfully_deleted'));
         }
         else{
             request()->session()->flash('error','Error while deleting post category');

@@ -521,5 +521,3 @@ setTimeout(function() {
     $('.alert').slideUp();    
 }, 3000);
 </script>
-</body>
-</html>

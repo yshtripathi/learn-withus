@@ -54,10 +54,10 @@ class HomeController extends Controller
         $data=$request->all();
         $status=$user->fill($data)->save();
         if($status){
-            request()->session()->flash('success',__('common.successfully_updated_profile'));
+            request()->session()->flash('success',__('frontend.successfully_updated_profile'));
         }
         else{
-            request()->session()->flash('error',__('common.please_try_again'));
+            request()->session()->flash('error',__('frontend.please_try_again'));
         }
         return redirect()->back();
     }
@@ -72,21 +72,21 @@ class HomeController extends Controller
         $order=Order::find($id);
         if($order){
            if($order->status=="process" || $order->status=='delivered' || $order->status=='cancel'){
-                return redirect()->back()->with('error',__('common.cannot_delete_order'));
+                return redirect()->back()->with('error',__('frontend.cannot_delete_order'));
            }
            else{
                 $status=$order->delete();
                 if($status){
-                    request()->session()->flash('success',__('common.order_successfully_deleted'));
+                    request()->session()->flash('success',__('frontend.order_successfully_deleted'));
                 }
                 else{
-                    request()->session()->flash('error',__('common.order_cannot_deleted'));
+                    request()->session()->flash('error',__('frontend.order_cannot_deleted'));
                 }
                 return redirect()->route('user.order.index');
            }
         }
         else{
-            request()->session()->flash('error',__('common.order_cannot_found'));
+            request()->session()->flash('error',__('frontend.order_cannot_found'));
             return redirect()->back();
         }
     }
@@ -128,14 +128,14 @@ class HomeController extends Controller
             $data=$request->all();
             $status=$review->fill($data)->update();
             if($status){
-                request()->session()->flash('success',__('common.review_successfully_updated'));
+                request()->session()->flash('success',__('frontend.review_successfully_updated'));
             }
             else{
-                request()->session()->flash('error',__('common.something_went_wrong_retry'));
+                request()->session()->flash('error',__('frontend.something_went_wrong_retry'));
             }
         }
         else{
-            request()->session()->flash('error',__('common.review_not_found'));
+            request()->session()->flash('error',__('frontend.review_not_found'));
         }
 
         return redirect()->route('user.productreview.index');
@@ -152,10 +152,10 @@ class HomeController extends Controller
         $review=ProductReview::find($id);
         $status=$review->delete();
         if($status){
-            request()->session()->flash('success',__('common.review_successfully_deleted'));
+            request()->session()->flash('success',__('frontend.review_successfully_deleted'));
         }
         else{
-            request()->session()->flash('error',__('common.something_went_wrong_retry'));
+            request()->session()->flash('error',__('frontend.something_went_wrong_retry'));
         }
         return redirect()->route('user.productreview.index');
     }
@@ -170,15 +170,15 @@ class HomeController extends Controller
         if($comment){
             $status=$comment->delete();
             if($status){
-                request()->session()->flash('success',__('common.comment_successfully_deleted'));
+                request()->session()->flash('success',__('frontend.comment_successfully_deleted'));
             }
             else{
-                request()->session()->flash('error',__('common.error_occurred'));
+                request()->session()->flash('error',__('frontend.error_occurred'));
             }
             return back();
         }
         else{
-            request()->session()->flash('error',__('common.comment_not_found'));
+            request()->session()->flash('error',__('frontend.comment_not_found'));
             return redirect()->back();
         }
     }
@@ -189,7 +189,7 @@ class HomeController extends Controller
             return view('user.comment.edit')->with('comment',$comments);
         }
         else{
-            request()->session()->flash('error',__('common.comment_not_found'));
+            request()->session()->flash('error',__('frontend.comment_not_found'));
             return redirect()->back();
         }
     }
@@ -209,15 +209,15 @@ class HomeController extends Controller
             // return $data;
             $status=$comment->fill($data)->update();
             if($status){
-                request()->session()->flash('success',__('common.comment_successfully_updated'));
+                request()->session()->flash('success',__('frontend.comment_successfully_updated'));
             }
             else{
-                request()->session()->flash('error',__('common.something_went_wrong_retry'));
+                request()->session()->flash('error',__('frontend.something_went_wrong_retry'));
             }
             return redirect()->route('user.post-comment.index');
         }
         else{
-            request()->session()->flash('error',__('common.comment_not_found'));
+            request()->session()->flash('error',__('frontend.comment_not_found'));
             return redirect()->back();
         }
 

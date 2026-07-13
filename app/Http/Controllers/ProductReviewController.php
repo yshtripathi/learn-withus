@@ -65,7 +65,7 @@ class ProductReviewController extends Controller
         ];
         Notification::send($user,new StatusNotification($details));
         if($status){
-            request()->session()->flash('success',__('common.thank_you_feedback'));
+            request()->session()->flash('success',__('frontend.thank_you_feedback'));
         }
         else{
             request()->session()->flash('error','Something went wrong! Please try again!!');
@@ -123,7 +123,7 @@ class ProductReviewController extends Controller
             // ];
             // Notification::send($user,new StatusNotification($details));
             if($status){
-                request()->session()->flash('success',__('common.review_successfully_updated'));
+                request()->session()->flash('success',__('frontend.review_successfully_updated'));
             }
             else{
                 request()->session()->flash('error','Something went wrong! Please try again!!');
@@ -147,7 +147,7 @@ class ProductReviewController extends Controller
         $review=ProductReview::find($id);
         $status=$review->delete();
         if($status){
-            request()->session()->flash('success',__('common.review_successfully_deleted'));
+            request()->session()->flash('success',__('frontend.review_successfully_deleted'));
         }
         else{
             request()->session()->flash('error','Something went wrong! Try again');

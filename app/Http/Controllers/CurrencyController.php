@@ -16,6 +16,6 @@ class CurrencyController extends Controller
             Session::put('currency', $currency);
         }
 
-        return redirect()->back()->with('success', __('common.currency_changed_to') . $currency);
+        return redirect()->back()->with('success', __('frontend.currency_changed_to') . $currency);
     }
 }

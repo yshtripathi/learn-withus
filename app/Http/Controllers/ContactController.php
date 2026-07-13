@@ -25,6 +25,6 @@ class ContactController extends Controller
         //Mail::to($data["email"])->send(new ContactMail($data));
          Mail::to($admin)->send(new ContactMail($data));
 
-        return redirect('contact')->with('success', __('common.message_sent_success'));
+        return redirect('contact')->with('success', __('frontend.message_sent_success'));
     }
 }

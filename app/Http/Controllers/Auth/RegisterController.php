@@ -61,7 +61,7 @@ class RegisterController extends Controller
                 isset($data['password'], $data['password_confirmation']) &&
                 $data['password'] !== $data['password_confirmation']
             ) {
-                $validator->errors()->add('password_confirmation', __('common.password_confirmation_not_match'));
+                $validator->errors()->add('password_confirmation', __('frontend.password_confirmation_not_match'));
             }
         });
     

@@ -40,10 +40,10 @@ class AdminController extends Controller
         $data=$request->all();
         $status=$user->fill($data)->save();
         if($status){
-            request()->session()->flash('success',__('common.profile_updated_success'));
+            request()->session()->flash('success',__('frontend.profile_updated_success'));
         }
         else{
-            request()->session()->flash('error',__('common.please_try_again'));
+            request()->session()->flash('error',__('frontend.please_try_again'));
         }
         return redirect()->back();
     }
@@ -70,10 +70,10 @@ class AdminController extends Controller
         // return $settings;
         $status=$settings->fill($data)->save();
         if($status){
-            request()->session()->flash('success',__('common.setting_updated_success'));
+            request()->session()->flash('success',__('frontend.setting_updated_success'));
         }
         else{
-            request()->session()->flash('error',__('common.please_try_again'));
+            request()->session()->flash('error',__('frontend.please_try_again'));
         }
         return redirect()->route('admin');
     }
@@ -91,7 +91,7 @@ class AdminController extends Controller
 
         User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
 
-        return redirect()->route('admin')->with('success',__('common.password_changed_success'));
+        return redirect()->route('admin')->with('success',__('frontend.password_changed_success'));
     }
 
     // Pie chart
@@ -126,7 +126,7 @@ class AdminController extends Controller
             //Regenerate the storage link folder
             try{
                 Artisan::call('storage:link');
-                request()->session()->flash('success', __('common.successfully_storage_linked'));
+                request()->session()->flash('success', __('frontend.successfully_storage_linked'));
                 return redirect()->back();
             }
             catch(\Exception $exception){
@@ -137,7 +137,7 @@ class AdminController extends Controller
         else{
             try{
                 Artisan::call('storage:link');
-                request()->session()->flash('success', __('common.successfully_storage_linked'));
+                request()->session()->flash('success', __('frontend.successfully_storage_linked'));
                 return redirect()->back();
             }
             catch(\Exception $exception){

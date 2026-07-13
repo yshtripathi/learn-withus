@@ -56,7 +56,7 @@ class PostCommentController extends Controller
         ];
         Notification::send($user, new StatusNotification($details));
         if($status){
-            request()->session()->flash('success',__('common.thank_you_comment'));
+            request()->session()->flash('success',__('frontend.thank_you_comment'));
         }
         else{
             request()->session()->flash('error','Something went wrong! Please try again!!');
@@ -108,7 +108,7 @@ class PostCommentController extends Controller
             // return $data;
             $status=$comment->fill($data)->update();
             if($status){
-                request()->session()->flash('success',__('common.comment_successfully_updated'));
+                request()->session()->flash('success',__('frontend.comment_successfully_updated'));
             }
             else{
                 request()->session()->flash('error','Something went wrong! Please try again!!');
@@ -134,7 +134,7 @@ class PostCommentController extends Controller
         if($comment){
             $status=$comment->delete();
             if($status){
-                request()->session()->flash('success',__('common.comment_successfully_deleted'));
+                request()->session()->flash('success',__('frontend.comment_successfully_deleted'));
             }
             else{
                 request()->session()->flash('error','Error occurred please try again');
