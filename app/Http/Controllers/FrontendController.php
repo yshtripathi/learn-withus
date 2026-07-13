@@ -311,14 +311,14 @@ class FrontendController extends Controller
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
         // Sort by number
         if(!empty($_GET['show'])){
-            $products=$products->where('status','active')->paginate($_GET['show']);
+            $products=$products->where('status','active')->with('levels')->paginate($_GET['show']);
         }
         else{
-            $products=$products->where('status','active')->paginate(50);
+            $products=$products->where('status','active')->with('levels')->paginate(50);
         }
         // Sort by name , price, category
 
-      
+
         return view('frontend.pages.product-lists')->with('products',$products)->with('recent_products',$recent_products);
     }
     public function productFilter(Request $request){

@@ -124,7 +124,7 @@ class Helper
     {
         if (Auth::check()) {
             if ($user_id == "") $user_id = auth()->user()->id;
-            $cartProduct = Cart::with('product')->where('user_id', $user_id)->where('order_id', null)->get();
+            $cartProduct = Cart::with(['product','level'])->where('user_id', $user_id)->where('order_id', null)->get();
 
             $currency = session("currency", "USD");
 
@@ -146,7 +146,7 @@ class Helper
         } else {
             // if ($user_id == "") $user_id = 0;
              $user_id = session('guest'); 
-             $cartProduct = Cart::with('product')->where('user_id', $user_id)->where('order_id', null)->get();
+             $cartProduct = Cart::with(['product','level'])->where('user_id', $user_id)->where('order_id', null)->get();
 
             $currency = session("currency", "USD");
 

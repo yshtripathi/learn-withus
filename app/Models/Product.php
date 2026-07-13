@@ -18,11 +18,23 @@ class Product extends Model
     public static function getAllProduct(){
         return Product::with(['cat_info','sub_cat_info'])->orderBy('id','desc')->paginate(10);
     }
+    // Every other active course in the same category (the detail page lists them all).
     public function rel_prods(){
-        return $this->hasMany('App\Models\Product','cat_id','cat_id')->where('status','active')->orderBy('id','DESC')->limit(8);
+        return $this->hasMany('App\Models\Product','cat_id','cat_id')->with('levels')->where('status','active')->orderBy('id','ASC');
     }
     public function levels(){
         return $this->hasMany('App\Models\ProductLevel','course_id','id')->ordered();
+    }
+    // A course carries no price of its own — pricing lives on its skill levels.
+    // Returns the cheapest level in the active currency, or null if none is priced.
+    public function lowestLevel(){
+        $currency = session('currency','USD');
+        $column = $currency == 'JPY' ? 'price_jp' : ($currency == 'HKD' ? 'price_hk' : 'price');
+
+        return $this->levels
+            ->filter(function($level) use ($column){ return $level->{$column} > 0; })
+            ->sortBy($column)
+            ->first();
     }
     public function getReview(){
         return $this->hasMany('App\Models\ProductReview','product_id','id')->with('user_info')->where('status','active')->orderBy('id','DESC');

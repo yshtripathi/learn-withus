@@ -1,222 +1,235 @@
 @extends('frontend.layouts.master')
 
 @section('meta')
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name='copyright' content=''>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="keywords" content="online shop, purchase, cart, ecommerce site, best online shopping">
-	<meta name="description" content="{{$product_detail->summary}}">
-	<meta property="og:url" content="{{route('product-detail',$product_detail->slug)}}">
+	<meta name="description" content="{{ Str::limit(strip_tags($product_detail->summary), 160) }}">
+	<meta property="og:url" content="{{ route('product-detail', $product_detail->slug) }}">
 	<meta property="og:type" content="article">
-	<meta property="og:title" content="{{$product_detail->title}}">
-	<meta property="og:image" content="{{ asset($product_detail->photo) }}">
-	<meta property="og:description" content="{{$product_detail->description}}">
+	<meta property="og:title" content="{{ $product_detail->title }}">
+	<meta property="og:image" content="{{ asset(explode(',', $product_detail->photo)[0]) }}">
+	<meta property="og:description" content="{{ Str::limit(strip_tags($product_detail->description), 200) }}">
 @endsection
-@section('title',$product_detail->title)
+
+@section('title', $product_detail->title)
 
 @section('main-content')
 
-	<main>
-    <x-breadcrumb
-        :title="$product_detail->title"
-        :items="[
-            ['label' => __('common.home'), 'url' => route('home')],
-            ['label' => __('common.shop'), 'url' => route('product-lists')],
-            ['label' => $product_detail->title],
-        ]" />
-        <!-- ./ page-header -->
+@php
+    $photo    = explode(',', $product_detail->photo);
+    $levels   = $product_detail->levels;
+    $currency = session('currency', 'USD');
+    $symbol   = $product_detail->getCurrencySymbol();
 
-        <section class="shop-section single pt-120 pb-120">
-            <div class="container">
-                <div class="row gy-5 justify-content-center">
-                    <div class="col-lg-6 col-md-12">                                   
-                         <div class="premium-detail-gallery" data-aos="fade-right" data-aos-duration="1000">
-                             @php 
-                                 $photo=explode(',', $product_detail->photo);
-                             @endphp
-                             <div class="premium-detail-img-wrap">
-                                 <img src="{{ asset('storage/photos/products/' . basename($photo[0])) }}" class="premium-detail-img" alt="{{ $product_detail->title }}">
-                                 <span class="premium-detail-badge">Wellness Course</span>
-                             </div>
-                         </div>
-                    </div> 
-                    <div class="col-lg-6 col-md-12">
-                        @php
-                            $levels = $product_detail->levels;
-                            $currency = session('currency', 'USD');
-                            $symbol = $product_detail->getCurrencySymbol();
-                        @endphp
-                        <div class="premium-detail-info" data-aos="fade-left" data-aos-duration="1000">
-                            <span class="premium-detail-eyebrow">Discover Excellence</span>
-                            <h1 class="premium-detail-title">{{$product_detail->title}}</h1>
+    // The course carries no price of its own — the selected skill level does.
+    $selected = $levels->first();
+@endphp
 
-                            <div class="premium-detail-price-box">
-                                <span class="premium-detail-price-label">{{ __('common.price') }}:</span>
-                                <h3 class="premium-detail-price" id="level-price">
-                                    {{ $symbol }}
-                                    @if($levels->count())
-                                        {{ Helper::getProductPriceByCurrency($currency, $levels->first()) }}
-                                    @else
-                                        {{ Helper::getProductPriceByCurrency($currency, $product_detail) }}
-                                    @endif
-                                </h3>
-                            </div>
+<x-breadcrumb
+    :title="$product_detail->title"
+    :items="[
+        ['label' => __('common.home'), 'url' => route('home')],
+        ['label' => __('common.shop'), 'url' => route('product-lists')],
+        ['label' => $product_detail->title],
+    ]" />
 
-                            @if($levels->count())
-                            <div class="premium-level-box">
-                                <h5 class="premium-detail-section-title">Choose Your Skill Level</h5>
-                                <div class="premium-level-tabs" role="tablist">
-                                    @foreach($levels as $i => $level)
-                                        <button type="button"
-                                                class="premium-level-tab {{ $i === 0 ? 'active' : '' }}"
-                                                data-level-id="{{ $level->id }}"
-                                                data-price="{{ $symbol }} {{ Helper::getProductPriceByCurrency($currency, $level) }}">
-                                            {{ $level->localized('skill_level') }}
-                                        </button>
-                                    @endforeach
-                                </div>
+<section class="pd-section">
+    <div class="container">
 
-                                @foreach($levels as $i => $level)
-                                    <div class="premium-level-panel {{ $i === 0 ? 'active' : '' }}" data-level-panel="{{ $level->id }}">
-                                        @if($level->localized('purpose'))
-                                            <h6 class="premium-level-heading">Purpose</h6>
-                                            <p class="premium-level-text">{{ $level->localized('purpose') }}</p>
-                                        @endif
-                                        @if($level->localized('learn_info'))
-                                            <h6 class="premium-level-heading">What You Will Learn</h6>
-                                            <p class="premium-level-text">{{ $level->localized('learn_info') }}</p>
-                                        @endif
-                                        @if($level->localized('outcome'))
-                                            <h6 class="premium-level-heading">Outcome</h6>
-                                            <p class="premium-level-text">{{ $level->localized('outcome') }}</p>
-                                        @endif
-                                    </div>
-                                @endforeach
-                            </div>
+        {{-- One form spans both columns, so the chosen level posts with no JS. --}}
+        <form action="{{ route('single-add-to-cart') }}" method="POST">
+            @csrf
+            <input type="hidden" name="quant[1]" value="1">
+            <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
+
+            <div class="row gy-4">
+
+                <!-- Left: media, description, levels -->
+                <div class="col-lg-8">
+
+                    <div class="pd-media" data-aos="fade-up" data-aos-duration="800">
+                        <img src="{{ asset($photo[0]) }}" alt="{{ $product_detail->title }}">
+                    </div>
+
+                    @if($product_detail->summary || $product_detail->description)
+                        <div class="pd-block" data-aos="fade-up" data-aos-duration="800">
+                            <h2 class="pd-heading">{{ __('common.course_description') }}</h2>
+
+                            @if($product_detail->summary)
+                                <p class="pd-summary">{{ $product_detail->summary }}</p>
                             @endif
 
-                            <div class="premium-detail-desc-box">
-                                <h5 class="premium-detail-section-title">Course Description</h5>
-                                <p class="premium-detail-desc">{{$product_detail->description}}</p>
-                            </div>
+                            @if($product_detail->description)
+                                <p class="pd-text">{{ $product_detail->description }}</p>
+                            @endif
+                        </div>
+                    @endif
 
-                            <div class="premium-detail-actions">
-                                <form action="{{route('single-add-to-cart')}}" method="POST" class="premium-detail-cart-form">
-                                    @csrf
-                                    <input type="hidden" name="quant[1]" class="qty-input" data-min="1" data-max="1000" value="1" id="quantity">
-                                    <input type="hidden" name="slug" value="{{$product_detail->slug}}">
-                                    @if($levels->count())
-                                        <input type="hidden" name="product_level_id" id="product-level-id" value="{{ $levels->first()->id }}">
-                                    @endif
+                    @if($levels->count())
+                        <div class="pd-block" data-aos="fade-up" data-aos-duration="800">
+                            <span class="pd-eyebrow">{{ __('common.skill_level') }}</span>
+                            <h2 class="pd-heading">{{ __('common.choose_your_level') }}</h2>
 
-                                    <button type="submit" class="premium-detail-buy-btn">
-                                        <i class="fa-light fa-cart-shopping"></i> Add to Cart
-                                    </button>
-                                </form>
+                            <div class="pd-levels">
+                                @foreach($levels as $i => $level)
+                                    <label class="pd-level">
+                                        <input type="radio"
+                                               name="product_level_id"
+                                               value="{{ $level->id }}"
+                                               data-name="{{ $level->localized('skill_level') }}"
+                                               data-price="{{ $symbol }} {{ Helper::getProductPriceByCurrency($currency, $level) }}"
+                                               {{ $i === 0 ? 'checked' : '' }}>
+                                        <span class="pd-level-box">
+                                            <span class="pd-level-name">{{ $level->localized('skill_level') }}</span>
+                                            <span class="pd-level-price">
+                                                {{ $symbol }} {{ Helper::getProductPriceByCurrency($currency, $level) }}
+                                            </span>
+                                        </span>
+                                    </label>
+                                @endforeach
                             </div>
                         </div>
-                    </div>
+
+                        @foreach($levels as $i => $level)
+                            <div class="pd-block pd-panel {{ $i === 0 ? 'is-active' : '' }}" data-panel="{{ $level->id }}">
+                                @if($level->localized('purpose'))
+                                    <h6>{{ __('common.purpose') }}</h6>
+                                    <p>{{ $level->localized('purpose') }}</p>
+                                @endif
+                                @if($level->localized('learn_info'))
+                                    <h6>{{ __('common.what_you_will_learn') }}</h6>
+                                    <p>{{ $level->localized('learn_info') }}</p>
+                                @endif
+                                @if($level->localized('outcome'))
+                                    <h6>{{ __('common.outcome') }}</h6>
+                                    <p>{{ $level->localized('outcome') }}</p>
+                                @endif
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+
+                <!-- Right: sticky purchase card -->
+                <div class="col-lg-4">
+                    <aside class="pd-buy" data-aos="fade-left" data-aos-duration="800">
+                        <span class="pd-eyebrow">{{ $product_detail->cat_info->title ?? __('common.course') }}</span>
+                        <h1 class="pd-heading">{{ $product_detail->title }}</h1>
+
+                        @if($selected)
+                            <span class="pd-buy-label">{{ __('common.skill_level') }}</span>
+                            <span class="pd-buy-level" id="pd-level-name">{{ $selected->localized('skill_level') }}</span>
+                        @endif
+
+                        <span class="pd-buy-label">{{ __('common.price') }}</span>
+                        <span class="pd-buy-price" id="pd-price">
+                            {{ $symbol }}
+                            @if($selected)
+                                {{ Helper::getProductPriceByCurrency($currency, $selected) }}
+                            @else
+                                {{ Helper::getProductPriceByCurrency($currency, $product_detail) }}
+                            @endif
+                        </span>
+
+                        <button type="submit" class="ct-submit" {{ $product_detail->stock <= 0 ? 'disabled' : '' }}>
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span>{{ $product_detail->stock <= 0 ? __('common.sold_out') : __('common.add_to_cart') }}</span>
+                        </button>
+
+                        @if($product_detail->lectures || $product_detail->language)
+                            <ul class="pd-meta">
+                                @if($product_detail->lectures)
+                                    <li>
+                                        <span><i class="fa-solid fa-play"></i> {{ __('common.lectures') }}</span>
+                                        <b>{{ $product_detail->lectures }}</b>
+                                    </li>
+                                @endif
+                                @if($product_detail->language)
+                                    <li>
+                                        <span><i class="fa-solid fa-globe"></i> {{ __('common.language') }}</span>
+                                        <b>{{ $product_detail->language }}</b>
+                                    </li>
+                                @endif
+                            </ul>
+                        @endif
+                    </aside>
                 </div>
             </div>
-        </section>
-        
-    </main>
+        </form>
+
+        <!-- Related -->
+        @php
+            // Every other course in this category — not a trimmed selection.
+            $related = $product_detail->rel_prods->where('id', '!=', $product_detail->id);
+        @endphp
+
+        @if($related->count())
+            <div class="pd-related">
+                <h2 class="pd-related-title">{{ __('common.related_courses') }}</h2>
+
+                <div class="row gy-4">
+                    @foreach($related as $rel)
+                        @php
+                            $relPhoto = explode(',', $rel->photo);
+                            $relLowest = $rel->lowestLevel();
+                        @endphp
+                        <div class="col-lg-4 col-md-6">
+                            <article class="sh-card">
+                                <div class="sh-thumb">
+                                    <img src="{{ asset($relPhoto[0]) }}" alt="{{ $rel->title }}">
+                                    <span class="sh-tag">{{ __('common.course') }}</span>
+                                    <div class="sh-overlay">
+                                        <a href="{{ route('product-detail', $rel->slug) }}" class="sh-view">
+                                            <i class="fa-regular fa-eye"></i> {{ __('common.view_details') }}
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="sh-body">
+                                    <h4 class="sh-title">
+                                        <a href="{{ route('product-detail', $rel->slug) }}">{{ $rel->title }}</a>
+                                    </h4>
+                                    <div class="sh-foot">
+                                        <span class="sh-price">
+                                            @if($relLowest)
+                                                <small class="sh-from">{{ __('common.from') }}</small>
+                                                {{ $symbol }} {{ Helper::getProductPriceByCurrency($currency, $relLowest) }}
+                                            @else
+                                                {{ $symbol }} {{ Helper::getProductPriceByCurrency($currency, $rel) }}
+                                            @endif
+                                        </span>
+                                        <a href="{{ route('product-detail', $rel->slug) }}" class="sh-add">
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+    </div>
+</section>
 
 @endsection
-@push('styles')
-	<style>
-		.premium-level-box {
-			margin: 28px 0;
-		}
-		.premium-level-tabs {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 10px;
-			margin-bottom: 20px;
-		}
-		.premium-level-tab {
-			flex: 1 1 auto;
-			min-width: 110px;
-			padding: 10px 16px;
-			border: 1px solid #ddd;
-			border-radius: 30px;
-			background: #fff;
-			color: #333;
-			font-weight: 600;
-			font-size: 14px;
-			cursor: pointer;
-			transition: all .2s ease;
-		}
-		.premium-level-tab:hover {
-			border-color: #999;
-		}
-		.premium-level-tab.active {
-			background: #1a1a1a;
-			border-color: #1a1a1a;
-			color: #fff;
-		}
-		.premium-level-panel {
-			display: none;
-		}
-		.premium-level-panel.active {
-			display: block;
-		}
-		.premium-level-heading {
-			font-size: 15px;
-			font-weight: 700;
-			margin-bottom: 6px;
-		}
-		.premium-level-text {
-			margin-bottom: 16px;
-			line-height: 1.7;
-		}
-	</style>
-@endpush
+
 @push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const tabs = document.querySelectorAll(".premium-level-tab");
-            const panels = document.querySelectorAll(".premium-level-panel");
-            const priceEl = document.getElementById("level-price");
-            const levelInput = document.getElementById("product-level-id");
+<script>
+    // Selecting a level swaps the sticky card's price/name and the content panel.
+    document.addEventListener('DOMContentLoaded', function () {
+        var radios = document.querySelectorAll('.pd-level input[type=radio]');
+        var panels = document.querySelectorAll('.pd-panel');
+        var priceEl = document.getElementById('pd-price');
+        var nameEl = document.getElementById('pd-level-name');
 
-            tabs.forEach(tab => {
-                tab.addEventListener("click", function () {
-                    const levelId = this.dataset.levelId;
+        radios.forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                if (priceEl) priceEl.textContent = this.dataset.price;
+                if (nameEl) nameEl.textContent = this.dataset.name;
 
-                    tabs.forEach(t => t.classList.remove("active"));
-                    this.classList.add("active");
-
-                    panels.forEach(p => {
-                        p.classList.toggle("active", p.dataset.levelPanel === levelId);
-                    });
-
-                    priceEl.textContent = this.dataset.price;
-                    levelInput.value = levelId;
+                panels.forEach(function (panel) {
+                    panel.classList.toggle('is-active', panel.dataset.panel === radio.value);
                 });
             });
         });
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const stars = document.querySelectorAll(".star-rating span");
-            const ratingInput = document.getElementById("rating-value");
-
-            stars.forEach(s => s.classList.remove("selected"));
-
-            stars.forEach(star => {
-                star.addEventListener("click", function () {
-                    let value = this.getAttribute("data-value");
-                    ratingInput.value = value;
-
-                    stars.forEach(s => s.classList.remove("selected"));
-
-                    for (let i = 0; i < value; i++) {
-                        stars[i].classList.add("selected");
-                    }
-                });
-            });
-        });
-    </script>
+    });
+</script>
 @endpush

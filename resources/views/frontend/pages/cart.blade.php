@@ -2,129 +2,120 @@
 @section('title','Cart')
 @section('main-content')
 
-<main>
-    <!-- Page Header -->
-    <x-breadcrumb
-        :title="__('common.cart')"
-        :items="[
-            ['label' => __('common.home'), 'url' => route('home')],
-            ['label' => __('common.cart')],
-        ]" />
+<x-breadcrumb
+    :title="__('common.cart')"
+    :items="[
+        ['label' => __('common.home'), 'url' => route('home')],
+        ['label' => __('common.cart')],
+    ]" />
 
-    <!-- Cart Section -->
-    <section class="cart-section pt-130 pb-130">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">                       
-                    <div class="table-content cart-table">
-                        <form action="#" method="post" class="table-responsive">
-                            <table class="table mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="product-remove"></th>
-                                        <th class="cart-product-name text-center">{{ __('common.item') }}</th>
-                                        <th class="product-price">{{ __('common.price') }}</th>
-                                        <th class="product-quantity">{{ __('common.quantity') }}</th>
-                                        <th class="product-subtotal">{{ __('common.total') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if(Helper::cartCount())
-                                        @foreach(Helper::getAllProductFromCart() as $key=>$cart)
-                                            @php $photo = explode(',', $cart->product['photo']); @endphp
-                                            <tr>
-                                                <td class="product-remove">
-                                                    <a href="{{ route('cart-delete', $cart->id) }}">
-                                                        <i class="fa-sharp fa-regular fa-xmark"></i>
-                                                    </a>
-                                                </td>
-                                                <td class="product-thumbnail d-flex align-items-center">
-                                                    <a href="{{ route('product-detail', $cart->product->slug) }}">
-                                                        <img src="{{ url($photo[0]) }}" alt="{{ $cart->product['title'] }}">
-                                                    </a>
-                                                    <div class="product-thumbnail ms-3">
-                                                        <h4 class="title">{{ $cart->product['title'] }}</h4>
-                                                    </div>
-                                                </td>
-                                                <td class="product-price">
-                                                    <span class="amount">{{ Helper::getCurrencySymbol(session('currency')) }}
-                                                        @if(session('currency') == 'JPY')
-                                                            {{ number_format($cart['price'], 0) }}
-                                                        @else
-                                                            {{ number_format($cart['price'], 2, '.', ',') }}
-                                                        @endif
-                                                    </span>
-                                                </td>
-                                                <td class="product-quantity">
-                                                    <div class="quantity__group">
-                                                        <input type="text" name="quant[{{$key}}]" value="{{ $cart->quantity }}" class="input-text qty text" disabled>
-                                                        <input type="hidden" name="cart_id[]" value="{{ $cart->id }}">
-                                                    </div>
-                                                </td>
-                                                <td class="product-subtotal">
-                                                    <span class="amount">{{ Helper::getCurrencySymbol(session('currency')) }}
-                                                        @if(session('currency') == 'JPY')
-                                                            {{ number_format($cart['amount'], 0) }}
-                                                        @else
-                                                            {{ number_format($cart['amount'], 2, '.', ',') }}
-                                                        @endif
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td colspan="5" class="text-center">
-                                                {{ __('common.no_cart_available') }} 
-                                                <a href="{{ route('product-lists') }}" style="color:blue;">{{ __('common.continue_shopping') }}</a>
-                                            </td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </form>
-                    </div>  
-                </div>                        
-                
-                <div class="col-lg-4">
-                    <div class="checkout-wrapper">
-                        <div class="checkout-top checkout-item item-1">
-                            <h4 class="title">{{ __('common.order_summary') }}</h4>
-                        </div>
-                        {{-- <div class="checkout-top checkout-item">
-                            <h4 class="title">{{ __('common.subtotal') }}</h4>
-                            <span class="price">{{ Helper::getCurrencySymbol(session('currency')) }}
-                                {{number_format(Helper::totalCartPrice(), Helper::getCurrencySymbol(session('currency'))=='¥' ? 0 : 2)}}
-                            </span>
-                        </div> --}}                  
-                        <div class="checkout-total checkout-item">
-                            <h4 class="title">{{ __('common.total') }}</h4>
-                            <span>{{ Helper::getCurrencySymbol(session('currency')) }}
-                                @if(session('currency') == 'JPY')
-                                    {{ number_format(Helper::totalCartPrice(), 0) }}
+@php
+    $symbol   = Helper::getCurrencySymbol(session('currency'));
+    $isJpy    = session('currency') == 'JPY';
+    $decimals = $isJpy ? 0 : 2;
+    $items    = Helper::cartCount() ? Helper::getAllProductFromCart() : collect();
+@endphp
+
+<section class="cr-section">
+    <div class="container">
+
+        @if(count($items))
+            <div class="row gy-4">
+
+                <!-- Line items -->
+                <div class="col-lg-8">
+                    <div class="cr-head">
+                        <h2>{{ __('common.cart') }}</h2>
+                        <span>{{ count($items) }} {{ count($items) === 1 ? __('common.item') : __('common.items') }}</span>
+                    </div>
+
+                    @foreach($items as $cart)
+                        @php
+                            $photo = explode(',', $cart->product['photo']);
+                            $level = $cart->level;
+                        @endphp
+
+                        <div class="cr-item" data-aos="fade-up" data-aos-duration="600">
+                            <a href="{{ route('product-detail', $cart->product->slug) }}" class="cr-thumb">
+                                <img src="{{ url($photo[0]) }}" alt="{{ $cart->product['title'] }}">
+                            </a>
+
+                            <div class="cr-info">
+                                <h4 class="cr-title">
+                                    <a href="{{ route('product-detail', $cart->product->slug) }}">
+                                        {{ $cart->product['title'] }}
+                                    </a>
+                                </h4>
+
+                                @if($level)
+                                    <span class="cr-badge">
+                                        <i class="fa-solid fa-layer-group"></i>
+                                        {{ $level->localized('skill_level') }}
+                                    </span>
                                 @else
-                                    {{ number_format(Helper::totalCartPrice(), 2, '.', ',') }}
+                                    {{-- Added before levels were recorded, or added without picking one. --}}
+                                    <span class="cr-badge cr-badge-none">{{ __('common.no_level_selected') }}</span>
                                 @endif
-                            </span>
+
+                                <p class="cr-unit">
+                                    {{ $symbol }} {{ number_format($cart['price'], $decimals, '.', ',') }}
+                                    &times; <b>{{ $cart->quantity }}</b>
+                                </p>
+                            </div>
+
+                            <div class="cr-right">
+                                <span class="cr-amount">
+                                    {{ $symbol }} {{ number_format($cart['amount'], $decimals, '.', ',') }}
+                                </span>
+                                <a href="{{ route('cart-delete', $cart->id) }}" class="cr-remove" title="{{ __('common.remove') }}">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="checkout-proceed mt-4">
-                        <a href="{{ route('checkout') }}" class="ed-primary-btn checkout-btn">
-                            {{ __('common.checkout') }}
+                    @endforeach
+                </div>
+
+                <!-- Summary -->
+                <div class="col-lg-4">
+                    <aside class="cr-summary" data-aos="fade-left" data-aos-duration="800">
+                        <h3>{{ __('common.order_summary') }}</h3>
+
+                        @foreach($items as $cart)
+                            <div class="cr-row">
+                                <span>{{ Str::limit($cart->product['title'], 24) }}</span>
+                                <span>{{ $symbol }} {{ number_format($cart['amount'], $decimals, '.', ',') }}</span>
+                            </div>
+                        @endforeach
+
+                        <div class="cr-total">
+                            <span>{{ __('common.total') }}</span>
+                            <b>{{ $symbol }} {{ number_format(Helper::totalCartPrice(), $decimals, '.', ',') }}</b>
+                        </div>
+
+                        <a href="{{ route('checkout') }}" class="ct-submit">
+                            <span>{{ __('common.checkout') }}</span>
+                            <i class="fa-solid fa-arrow-right"></i>
                         </a>
-                    </div>
+
+                        <a href="{{ route('product-lists') }}" class="cr-continue">
+                            {{ __('common.continue_shopping') }}
+                        </a>
+                    </aside>
                 </div>
             </div>
-        </div>
-    </section>             
-</main>
+        @else
+            <div class="cr-empty" data-aos="fade-up" data-aos-duration="800">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <h4>{{ __('common.no_cart_available') }}</h4>
+                <p>{{ __('common.try_another_category') }}</p>
+                <a href="{{ route('product-lists') }}" class="ct-submit">
+                    <i class="fa-solid fa-palette"></i>
+                    <span>{{ __('common.continue_shopping') }}</span>
+                </a>
+            </div>
+        @endif
+
+    </div>
+</section>
 
 @endsection
-
-@push('styles')
-<!-- Add your custom CSS if any -->
-@endpush
-
-@push('scripts')
-<!-- Add your custom JS if any -->
-@endpush

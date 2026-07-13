@@ -124,6 +124,8 @@ $already_cart='';
             $cart = new Cart;
             $cart->user_id = auth()->user()->id ?? $guest;
             $cart->product_id = $product->id;
+            // Remember which level was bought, not just the price it cost.
+            $cart->product_level_id = ($priced instanceof ProductLevel) ? $priced->id : null;
             $cart->currency = session("currency", "USD");
             $cart->price = $priced->price;
             $cart->price_jp = $priced->price_jp;

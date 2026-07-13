@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    protected $fillable=['user_id','product_id','order_id','quantity', 'amount', 'amount_jp', 'currency', 'price', 'price_jp', 'status'];
+    protected $fillable=['user_id','product_id','product_level_id','order_id','quantity', 'amount', 'amount_jp', 'currency', 'price', 'price_jp', 'status'];
+
+    // The skill level this line was bought at (courses are priced per level).
+    public function level(){
+        return $this->belongsTo(ProductLevel::class, 'product_level_id');
+    }
     
     // public function product(){
     //     return $this->hasOne('App\Models\Product','id','product_id');
